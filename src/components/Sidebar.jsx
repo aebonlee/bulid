@@ -44,17 +44,29 @@ function SectionLabel({ children, className = '' }) {
   )
 }
 
-/* ---------------- 제1·2권 차례 ---------------- */
+/* ---------------- 제1·2권 교재 전체 목차 ---------------- */
 function VolumeNav({ onClose }) {
   const { volId, partNum } = useParams()
   const vol = getVolume(volId) || volumes[0]
   const { isDone } = useProgress()
-  const days = vol.parts.filter((p) => p.kind === 'day')
-  const appendix = vol.parts.filter((p) => p.kind !== 'day')
+
+  // 절 클릭: 해당 PART로 이동 후 절 위치로 스크롤
+  const goSection = (pnum, snum, e) => {
+    const samePart = String(pnum) === String(partNum)
+    if (samePart) {
+      e.preventDefault()
+      document.getElementById(`sec-${snum}`)?.scrollIntoView({ behavior: 'smooth' })
+      onClose?.()
+    } else {
+      // Link 기본 이동 → 이동 후 스크롤
+      setTimeout(() => document.getElementById(`sec-${snum}`)?.scrollIntoView({ behavior: 'smooth' }), 400)
+      onClose?.()
+    }
+  }
 
   return (
     <>
-      <div className="mb-4 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
+      <div className="mb-3 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
         {volumes.map((v) => (
           <Link
             key={v.id}
@@ -70,63 +82,56 @@ function VolumeNav({ onClose }) {
       </div>
 
       <Link
-        to={`/vol/${vol.id}`}
-        onClick={onClose}
-        className="mb-1.5 block rounded-lg px-2 py-1.5 text-[12px] font-semibold text-brand-700 hover:bg-brand-50"
-      >
-        <Icon name="fa-solid fa-list-ol" /> 교재 전체 목차
-      </Link>
-      <Link
         to={`/schedule/${vol.id}`}
         onClick={onClose}
-        className="mb-3 block rounded-lg px-2 py-1.5 text-[12px] font-semibold text-brand-700 hover:bg-brand-50"
+        className="mb-3 block rounded-lg bg-signal-50 px-2.5 py-2 text-[12px] font-semibold text-signal-700 hover:bg-signal-100"
       >
-        <Icon name="fa-solid fa-calendar-days" /> 날짜별 교육 일정
+        <Icon name="fa-solid fa-calendar-days" /> 날짜별 교육 일정 보기
       </Link>
 
-      <SectionLabel>DAY 1–6 · 본 과정</SectionLabel>
+      <SectionLabel>교재 목차 (Contents)</SectionLabel>
       <nav className="mt-1.5 space-y-0.5">
-        {days.map((p) => (
-          <PartLink key={p.num} vol={vol} part={p} active={String(p.num) === String(partNum)} done={isDone(vol.id, p.num)} onClose={onClose} />
-        ))}
+        {vol.parts.map((p) => {
+          const active = String(p.num) === String(partNum)
+          const done = p.kind === 'day' && isDone(vol.id, p.num)
+          const label = p.kind === 'day' ? `PART ${String(p.num).padStart(2, '0')} · DAY ${p.day}` : `PART ${String(p.num).padStart(2, '0')} · 부록`
+          return (
+            <details key={p.num} open={active} className="group [&_summary]:list-none">
+              <summary className="flex cursor-pointer items-start gap-2 rounded-lg px-2 py-1.5 hover:bg-slate-50">
+                <span
+                  className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-bold ${
+                    done ? 'bg-emerald-500 text-white' : active ? 'bg-brand-800 text-white' : 'bg-slate-200 text-slate-500'
+                  }`}
+                >
+                  {done ? <Icon name="fa-solid fa-check" /> : p.kind === 'day' ? p.day : p.num}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className={`block text-[10px] font-semibold ${active ? 'text-brand-600' : 'text-slate-400'}`}>{label}</span>
+                  <span className={`block text-[12.5px] leading-snug ${active ? 'font-bold text-brand-900' : 'font-semibold text-slate-700'}`}>{p.title}</span>
+                </span>
+                <Icon name="fa-solid fa-chevron-down" className="mt-1 shrink-0 text-[10px] text-slate-300 transition group-open:rotate-180" />
+              </summary>
+
+              {p.sections.length > 0 && (
+                <ul className="mb-1 ml-7 mt-0.5 space-y-0.5 border-l border-slate-100 pl-2">
+                  {p.sections.map((sec) => (
+                    <li key={sec.num}>
+                      <Link
+                        to={`/vol/${vol.id}/part/${p.num}`}
+                        onClick={(e) => goSection(p.num, sec.num, e)}
+                        className="block rounded px-1.5 py-1 text-[12px] leading-snug text-slate-600 hover:bg-brand-50 hover:text-brand-700"
+                      >
+                        {sec.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </details>
+          )
+        })}
       </nav>
-
-      {appendix.length > 0 && (
-        <>
-          <SectionLabel className="mt-5">부록</SectionLabel>
-          <nav className="mt-1.5 space-y-0.5">
-            {appendix.map((p) => (
-              <PartLink key={p.num} vol={vol} part={p} active={String(p.num) === String(partNum)} done={isDone(vol.id, p.num)} onClose={onClose} />
-            ))}
-          </nav>
-        </>
-      )}
     </>
-  )
-}
-
-function PartLink({ vol, part, active, done, onClose }) {
-  const dayLabel = part.kind === 'day' ? `DAY ${part.day}` : `PART ${String(part.num).padStart(2, '0')}`
-  return (
-    <Link
-      to={`/vol/${vol.id}/part/${part.num}`}
-      onClick={onClose}
-      className={`flex items-start gap-2 rounded-lg px-2.5 py-2 transition ${
-        active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
-      }`}
-    >
-      <span
-        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-bold ${
-          done ? 'bg-emerald-500 text-white' : active ? 'bg-brand-800 text-white' : 'bg-slate-200 text-slate-500'
-        }`}
-      >
-        {done ? <Icon name="fa-solid fa-check" /> : part.kind === 'day' ? part.day : part.num}
-      </span>
-      <span className="min-w-0">
-        <span className={`block text-[10.5px] font-semibold ${active ? 'text-brand-600' : 'text-slate-400'}`}>{dayLabel}</span>
-        <span className={`block text-[13px] leading-snug ${active ? 'font-semibold text-brand-900' : 'text-slate-600'}`}>{part.title}</span>
-      </span>
-    </Link>
   )
 }
 

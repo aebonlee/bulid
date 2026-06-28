@@ -34,8 +34,13 @@ export default function DayPlan({ plan, defaultOpen = true }) {
           const st = BLOCK_STYLE[b.type] || BLOCK_STYLE['학습']
           return (
             <div key={i} className="flex items-start gap-3 px-3 py-2.5">
-              <div className="w-[92px] shrink-0 pt-0.5 font-mono text-[12px] font-semibold text-slate-500">
-                {b.start}–{b.end}
+              <div className="w-[96px] shrink-0 pt-0.5">
+                {b.period && (
+                  <div className="text-[11px] font-bold text-brand-700">{b.period}</div>
+                )}
+                <div className="font-mono text-[11.5px] font-semibold text-slate-500">
+                  {b.start}–{b.end}
+                </div>
               </div>
               <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${st.dot}`} />
               <div className="min-w-0 flex-1">
