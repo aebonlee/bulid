@@ -71,6 +71,22 @@ export default function ToolPage() {
           <p className="text-[15px] leading-[1.8] text-slate-700">{tool.overview}</p>
         </Card>
 
+        {/* 시작하기 */}
+        {tool.gettingStarted?.length > 0 && (
+          <Card id="start" title="시작하기" icon="fa-solid fa-circle-play">
+            <ol className="space-y-2.5">
+              {tool.gettingStarted.map((s, i) => (
+                <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-slate-700">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-800 text-[11px] font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ol>
+          </Card>
+        )}
+
         {isPrompt ? (
           <>
             <Card title="좋은 프롬프트의 5대 원칙" icon="fa-solid fa-bullseye">
@@ -164,6 +180,47 @@ export default function ToolPage() {
                 ))}
               </div>
             </Card>
+
+            {/* 기능 상세 가이드 */}
+            {tool.featureGuides?.length > 0 && (
+              <Card id="guide" title="기능 상세 가이드" icon="fa-solid fa-book-open-reader">
+                <p className="-mt-2 mb-4 text-[13px] text-slate-500">
+                  주요 기능별로 무엇인지·어떻게 쓰는지·실무 팁을 정리했습니다.
+                </p>
+                <div className="space-y-4">
+                  {tool.featureGuides.map((g, i) => (
+                    <div key={i} className="rounded-xl border border-slate-200 p-5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-[16px] text-brand-700">
+                          <Icon name={g.icon} />
+                        </span>
+                        <h3 className="text-[15.5px] font-extrabold text-brand-900">{g.name}</h3>
+                      </div>
+                      <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-700">{g.what}</p>
+                      {g.how?.length > 0 && (
+                        <div className="mt-3">
+                          <div className="mb-1.5 text-[11.5px] font-bold text-slate-500">사용 방법</div>
+                          <ol className="space-y-1">
+                            {g.how.map((h, hi) => (
+                              <li key={hi} className="flex gap-2 text-[13px] leading-relaxed text-slate-600">
+                                <span className="font-mono text-[11px] font-bold text-brand-500">{hi + 1}.</span>
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                      )}
+                      {g.tip && (
+                        <div className="mt-3 flex items-start gap-2 rounded-lg bg-emerald-50 p-2.5 text-[12.5px] leading-relaxed text-slate-700">
+                          <Icon name="fa-solid fa-lightbulb" className="mt-0.5 shrink-0 text-emerald-500" />
+                          <span>{g.tip}</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
 
             <Card id="usecases" title="건설기계 실무 활용" icon="fa-solid fa-helmet-safety">
               <div className="space-y-3">
