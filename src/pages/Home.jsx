@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import { volumes, partStats } from '../data/courses'
+import { tools } from '../data/tools'
 import Icon from '../components/Icon'
 import { useProgress } from '../context/ProgressContext'
+
+// 히어로 우측에 둥둥 떠다니는 AI 툴 로고 배치
+const FLOATERS = [
+  { id: 'chatgpt', cls: 'right-[26%] top-[14%] h-16 w-16 text-2xl', dur: '6s', delay: '0s', accent: 'text-emerald-300' },
+  { id: 'claude', cls: 'right-[8%] top-[22%] h-20 w-20 text-3xl', dur: '7s', delay: '.6s', accent: 'text-violet-300' },
+  { id: 'gemini', cls: 'right-[34%] top-[44%] h-14 w-14 text-xl', dur: '5.5s', delay: '1.1s', accent: 'text-sky-300' },
+  { id: 'genspark', cls: 'right-[18%] top-[60%] h-16 w-16 text-2xl', dur: '6.5s', delay: '.3s', accent: 'text-signal-300' },
+  { id: 'perplexity', cls: 'right-[6%] top-[64%] h-14 w-14 text-xl', dur: '7.5s', delay: '1.4s', accent: 'text-rose-300' },
+]
 
 export default function Home() {
   const { countDone } = useProgress()
@@ -15,6 +25,28 @@ export default function Home() {
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div className="absolute inset-0 opacity-20" style={heroPattern} />
         <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-signal-400/20 blur-3xl" />
+
+        {/* 떠다니는 AI 툴 로고 (lg 이상) */}
+        <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
+          {FLOATERS.map((f) => {
+            const tool = tools.find((t) => t.id === f.id)
+            if (!tool) return null
+            return (
+              <div
+                key={f.id}
+                className={`floaty absolute flex items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/20 backdrop-blur-sm ${f.cls} ${f.accent}`}
+                style={{ animationDuration: f.dur, animationDelay: f.delay }}
+                title={tool.name}
+              >
+                <Icon name={tool.icon} />
+                <span className="absolute -bottom-5 whitespace-nowrap text-[10.5px] font-semibold text-brand-100/70">
+                  {tool.name}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+
         <div className="relative mx-auto max-w-screen-xl px-5 py-16 sm:py-20">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-signal-300 ring-1 ring-white/15">
             <Icon name="fa-solid fa-helmet-safety" /> 2026년 산업전문인력 AI역량강화 (건설기계)
