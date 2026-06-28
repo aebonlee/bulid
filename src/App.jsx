@@ -6,6 +6,7 @@ import VolumeOverview from './pages/VolumeOverview'
 import PartPage from './pages/PartPage'
 import ToolsHome from './pages/ToolsHome'
 import ToolPage from './pages/ToolPage'
+import PromptLab from './pages/PromptLab'
 import About from './pages/About'
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/vol/:volId" element={<VolumeOverview />} />
           <Route path="/vol/:volId/part/:partNum" element={<PartPage />} />
           <Route path="/tools" element={<ToolsHome />} />
+          <Route path="/tools/prompt" element={<PromptLab />} />
           <Route path="/tools/:toolId" element={<ToolPage />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Navigate to="/" replace />} />
