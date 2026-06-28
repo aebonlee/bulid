@@ -14,6 +14,34 @@ const FLOATERS = [
   { id: 'perplexity', cls: 'right-[6%] top-[64%] h-14 w-14 text-xl', dur: '7.5s', delay: '1.4s', accent: 'text-rose-300' },
 ]
 
+// 배경용 큰 "AI" SVG 워터마크
+function AiMark({ id, className = '' }) {
+  return (
+    <svg viewBox="0 0 360 180" className={className} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#fbbf24" />
+          <stop offset="1" stopColor="#7ea4d6" />
+        </linearGradient>
+      </defs>
+      <text
+        x="180"
+        y="138"
+        textAnchor="middle"
+        fontSize="180"
+        fontWeight="900"
+        letterSpacing="6"
+        fontFamily="Pretendard, system-ui, sans-serif"
+        fill={`url(#${id})`}
+        stroke="rgba(255,255,255,0.3)"
+        strokeWidth="1.5"
+      >
+        AI
+      </text>
+    </svg>
+  )
+}
+
 export default function Home() {
   const { countDone } = useProgress()
 
@@ -25,6 +53,11 @@ export default function Home() {
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div className="absolute inset-0 opacity-20" style={heroPattern} />
         <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-signal-400/20 blur-3xl" />
+
+        {/* 배경 "AI" 워터마크 (lg 이상) — 떠다니는 로고 뒤 */}
+        <div className="pointer-events-none absolute inset-y-0 right-[4%] hidden w-[40%] items-center justify-center lg:flex" aria-hidden="true">
+          <AiMark id="aimark-desktop" className="floaty h-[55%] w-full opacity-[0.14]" />
+        </div>
 
         {/* 떠다니는 AI 툴 로고 (lg 이상) */}
         <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
@@ -82,22 +115,27 @@ export default function Home() {
             <Stat n="4대" l="생성형 AI 도구" />
           </div>
 
-          {/* 모바일 전용 AI 툴 로고 행 */}
-          <div className="mt-9 flex flex-wrap gap-3 lg:hidden">
-            {FLOATERS.map((f, i) => {
-              const tool = tools.find((t) => t.id === f.id)
-              if (!tool) return null
-              return (
-                <div
-                  key={f.id}
-                  className={`floaty flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-lg ring-1 ring-white/20 ${f.accent}`}
-                  style={{ animationDuration: f.dur, animationDelay: `${i * 0.25}s` }}
-                  title={tool.name}
-                >
-                  <Icon name={tool.icon} />
-                </div>
-              )
-            })}
+          {/* 모바일 전용 AI 툴 로고 행 (배경 "AI" 워터마크 위) */}
+          <div className="relative mt-9 lg:hidden">
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-start" aria-hidden="true">
+              <AiMark id="aimark-mobile" className="h-24 w-auto opacity-[0.13]" />
+            </div>
+            <div className="relative flex flex-wrap gap-3">
+              {FLOATERS.map((f, i) => {
+                const tool = tools.find((t) => t.id === f.id)
+                if (!tool) return null
+                return (
+                  <div
+                    key={f.id}
+                    className={`floaty flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-lg ring-1 ring-white/20 ${f.accent}`}
+                    style={{ animationDuration: f.dur, animationDelay: `${i * 0.25}s` }}
+                    title={tool.name}
+                  >
+                    <Icon name={tool.icon} />
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </section>
