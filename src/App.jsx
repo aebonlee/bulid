@@ -25,6 +25,7 @@ export default function App() {
           <Route path="/vol/:volId/part/:partNum" element={<PartPage />} />
           <Route path="/schedule/:volId" element={<Schedule />} />
           <Route path="/labs/:volId" element={<Labs />} />
+          <Route path="/labs/:volId/:day" element={<Labs />} />
           <Route path="/tools" element={<ToolsHome />} />
           <Route path="/tools/prompt" element={<Navigate to="/tools/prompt/learn" replace />} />
           <Route path="/tools/prompt/:section" element={<PromptLab />} />

@@ -365,16 +365,13 @@ function ScheduleNav({ onClose }) {
 
 /* ---------------- 실습 따라하기 ---------------- */
 function LabsNav({ onClose }) {
-  const { volId } = useParams()
+  const { volId, day } = useParams()
+  const loc = useLocation()
   const vid = labsByVol[volId] ? volId : 'vol1'
   const days = labsByVol[vid]?.days || []
-  const go = (d) => {
-    document.getElementById(`day-${d}`)?.scrollIntoView({ behavior: 'smooth' })
-    onClose?.()
-  }
   return (
     <>
-      <div className="mb-4 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
+      <div className="mb-3 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
         {volumes.map((v) => (
           <Link
             key={v.id}
@@ -389,30 +386,38 @@ function LabsNav({ onClose }) {
         ))}
       </div>
 
-      <SectionLabel>실습 · 따라하기 · DAY</SectionLabel>
-      <nav className="mt-1.5 space-y-0.5">
-        {days.map((d) => (
-          <button
-            key={d.day}
-            onClick={() => go(d.day)}
-            className="flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-left transition hover:bg-slate-50"
-          >
-            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-800 text-[10px] font-bold text-white">{d.day}</span>
-            <span className="min-w-0">
-              <span className="block text-[10.5px] font-semibold text-slate-400">DAY {d.day} · 실습 {d.labs.length}개</span>
-              <span className="block text-[12.5px] leading-snug text-slate-600">{d.subject}</span>
-            </span>
-          </button>
-        ))}
-      </nav>
-
       <Link
-        to={`/schedule/${vid}`}
+        to={`/labs/${vid}`}
         onClick={onClose}
-        className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
+        className={`mb-2 block rounded-lg px-3 py-2 text-[12.5px] font-semibold transition ${
+          loc.pathname === `/labs/${vid}` ? 'bg-brand-50 text-brand-800 ring-1 ring-brand-200' : 'text-brand-700 hover:bg-brand-50'
+        }`}
       >
-        <Icon name="fa-solid fa-calendar-days" /> 교육 일정 보기
+        <Icon name="fa-solid fa-flask-vial" /> 실습 전체 보기
       </Link>
+
+      <SectionLabel>실습 · DAY 선택</SectionLabel>
+      <nav className="mt-1.5 space-y-0.5">
+        {days.map((d) => {
+          const active = String(d.day) === String(day)
+          return (
+            <Link
+              key={d.day}
+              to={`/labs/${vid}/${d.day}`}
+              onClick={onClose}
+              className={`flex items-start gap-2.5 rounded-lg px-2.5 py-2 transition ${
+                active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
+              }`}
+            >
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-800 text-[10px] font-bold text-white">{d.day}</span>
+              <span className="min-w-0">
+                <span className="block text-[10.5px] font-semibold text-slate-400">DAY {d.day} · 실습 {d.labs.length}개</span>
+                <span className={`block text-[12.5px] leading-snug ${active ? 'font-bold text-brand-900' : 'text-slate-600'}`}>{d.subject}</span>
+              </span>
+            </Link>
+          )
+        })}
+      </nav>
     </>
   )
 }
