@@ -3,6 +3,7 @@ import { getVolume, volumes } from '../data/courses'
 import { toolMenu, getTool, TOOL_PAGES } from '../data/tools'
 import { ABOUT_PAGES } from '../data/about'
 import { dayPlans } from '../data/dayplans'
+import { labsByVol } from '../data/labs'
 import { PROMPT_SECTIONS } from '../data/promptLab'
 import { appendix } from '../data/appendix'
 import Icon from './Icon'
@@ -16,6 +17,8 @@ export default function Sidebar({ open, onClose }) {
     ? 'about'
     : loc.pathname.startsWith('/schedule')
     ? 'schedule'
+    : loc.pathname.startsWith('/labs')
+    ? 'labs'
     : loc.pathname.startsWith('/appendix')
     ? 'appendix'
     : 'vol'
@@ -34,6 +37,7 @@ export default function Sidebar({ open, onClose }) {
           {mode === 'tools' && <ToolsNav onClose={onClose} />}
           {mode === 'about' && <AboutNav onClose={onClose} />}
           {mode === 'schedule' && <ScheduleNav onClose={onClose} />}
+          {mode === 'labs' && <LabsNav onClose={onClose} />}
           {mode === 'appendix' && <AppendixNav onClose={onClose} />}
         </div>
       </aside>
@@ -354,6 +358,60 @@ function ScheduleNav({ onClose }) {
         className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
       >
         <Icon name="fa-solid fa-book" /> 교재 전체 목차 보기
+      </Link>
+    </>
+  )
+}
+
+/* ---------------- 실습 따라하기 ---------------- */
+function LabsNav({ onClose }) {
+  const { volId } = useParams()
+  const vid = labsByVol[volId] ? volId : 'vol1'
+  const days = labsByVol[vid]?.days || []
+  const go = (d) => {
+    document.getElementById(`day-${d}`)?.scrollIntoView({ behavior: 'smooth' })
+    onClose?.()
+  }
+  return (
+    <>
+      <div className="mb-4 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
+        {volumes.map((v) => (
+          <Link
+            key={v.id}
+            to={`/labs/${v.id}`}
+            onClick={onClose}
+            className={`rounded-lg py-2 text-center text-[12.5px] font-bold transition ${
+              v.id === vid ? 'bg-brand-800 text-white shadow' : 'text-slate-500 hover:bg-white'
+            }`}
+          >
+            {v.id === 'vol1' ? '제1권' : '제2권'}
+          </Link>
+        ))}
+      </div>
+
+      <SectionLabel>실습 · 따라하기 · DAY</SectionLabel>
+      <nav className="mt-1.5 space-y-0.5">
+        {days.map((d) => (
+          <button
+            key={d.day}
+            onClick={() => go(d.day)}
+            className="flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-left transition hover:bg-slate-50"
+          >
+            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-800 text-[10px] font-bold text-white">{d.day}</span>
+            <span className="min-w-0">
+              <span className="block text-[10.5px] font-semibold text-slate-400">DAY {d.day} · 실습 {d.labs.length}개</span>
+              <span className="block text-[12.5px] leading-snug text-slate-600">{d.subject}</span>
+            </span>
+          </button>
+        ))}
+      </nav>
+
+      <Link
+        to={`/schedule/${vid}`}
+        onClick={onClose}
+        className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
+      >
+        <Icon name="fa-solid fa-calendar-days" /> 교육 일정 보기
       </Link>
     </>
   )

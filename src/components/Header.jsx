@@ -10,6 +10,7 @@ const NAV = [
   { to: '/vol/vol1', label: '업무자동화과정' },
   { to: '/vol/vol2', label: '현장데이터활용과정' },
   { to: '/schedule/vol1', label: '교육일정' },
+  { to: '/labs/vol1', label: '실습 : 따라하기' },
   { to: '/tools/prompt/learn', label: '프롬프트학습' },
   { divider: true },
   { to: '/tools/chatgpt', label: 'ChatGPT' },
@@ -25,6 +26,7 @@ const NAV = [
 function isActive(pathname, to) {
   if (to === '/about') return pathname.startsWith('/about')
   if (to.startsWith('/schedule')) return pathname.startsWith('/schedule')
+  if (to.startsWith('/labs')) return pathname.startsWith('/labs')
   if (to.startsWith('/tools/prompt')) return pathname.startsWith('/tools/prompt')
   if (to.startsWith('/tools/')) return pathname.startsWith(to)
   if (to === '/vol/vol1') return pathname.startsWith('/vol/vol1')
