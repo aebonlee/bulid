@@ -1,7 +1,7 @@
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Layout from '../components/Layout'
-import { getTool, toolMenu } from '../data/tools'
+import { getTool } from '../data/tools'
 
 const HERO = {
   signal: 'from-signal-400 to-signal-500 text-brand-950',
@@ -10,26 +10,6 @@ const HERO = {
   sky: 'from-sky-500 to-sky-600 text-white',
   brand: 'from-brand-700 to-brand-800 text-white',
   rose: 'from-rose-500 to-rose-600 text-white',
-}
-
-function ToolChips({ activeId }) {
-  return (
-    <div className="mb-6 flex flex-wrap gap-2">
-      {toolMenu.map((t) => (
-        <Link
-          key={t.id}
-          to={`/tools/${t.id}`}
-          className={`rounded-full px-3 py-1.5 text-[12.5px] font-semibold transition ${
-            t.id === activeId
-              ? 'bg-brand-800 text-white'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-          }`}
-        >
-          {t.emoji} {t.name}
-        </Link>
-      ))}
-    </div>
-  )
 }
 
 function Card({ title, icon, children }) {
@@ -66,8 +46,6 @@ export default function ToolPage() {
           <span>/</span>
           <span className="text-slate-600">{tool.name}</span>
         </div>
-
-        <ToolChips activeId={tool.id} />
 
         {/* Hero */}
         <div className={`mb-7 rounded-2xl bg-gradient-to-br p-7 shadow-sm ${HERO[tool.color]}`}>

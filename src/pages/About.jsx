@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Header from '../components/Header'
+import Layout from '../components/Layout'
 import { purpose, instructor, company } from '../data/about'
 
 export default function About() {
@@ -9,26 +9,16 @@ export default function About() {
   }, [])
 
   return (
-    <div className="min-h-screen">
-      <Header />
-
+    <Layout>
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div className="absolute -right-16 -top-20 h-72 w-72 rounded-full bg-signal-400/20 blur-3xl" />
-        <div className="relative mx-auto max-w-4xl px-5 py-14">
+        <div className="relative mx-auto max-w-4xl px-5 py-12">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-signal-300 ring-1 ring-white/15">
             ℹ️ About
           </div>
           <h1 className="mt-4 text-3xl font-extrabold">소개</h1>
-          <p className="mt-2 text-[15px] text-brand-100">
-            제작 의도 · 강사 소개 · 회사 소개
-          </p>
-
-          <nav className="mt-6 flex flex-wrap gap-2">
-            <Anchor href="#purpose">제작 의도</Anchor>
-            <Anchor href="#instructor">강사 소개</Anchor>
-            <Anchor href="#company">회사 소개</Anchor>
-          </nav>
+          <p className="mt-2 text-[15px] text-brand-100">제작 의도 · 강사 소개 · 회사 소개</p>
         </div>
       </section>
 
@@ -138,7 +128,7 @@ export default function About() {
           2026년 산업전문인력 AI역량강화 (건설기계) · © DreamIT Biz
         </div>
       </footer>
-    </div>
+    </Layout>
   )
 }
 
@@ -150,20 +140,5 @@ function SectionTitle({ badge, children }) {
       </span>
       <h2 className="text-[22px] font-extrabold text-brand-900">{children}</h2>
     </div>
-  )
-}
-
-function Anchor({ href, children }) {
-  return (
-    <a
-      href={href}
-      onClick={(e) => {
-        e.preventDefault()
-        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-      }}
-      className="rounded-full bg-white/10 px-4 py-2 text-[13px] font-semibold text-white ring-1 ring-white/20 transition hover:bg-white/20"
-    >
-      {children}
-    </a>
   )
 }

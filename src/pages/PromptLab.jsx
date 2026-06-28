@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
-import { promptGuide, toolMenu } from '../data/tools'
+import { promptGuide } from '../data/tools'
 import {
   scoreCriteria,
   gradeTable,
@@ -34,21 +34,6 @@ export default function PromptLab() {
           <Link to="/tools" className="hover:text-brand-700">AI 도구 가이드</Link>
           <span>/</span>
           <span className="text-slate-600">프롬프트</span>
-        </div>
-
-        {/* 도구 칩 */}
-        <div className="mb-6 flex flex-wrap gap-2">
-          {toolMenu.map((t) => (
-            <Link
-              key={t.id}
-              to={t.id === 'prompt' ? '/tools/prompt' : `/tools/${t.id}`}
-              className={`rounded-full px-3 py-1.5 text-[12.5px] font-semibold transition ${
-                t.id === 'prompt' ? 'bg-brand-800 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              }`}
-            >
-              {t.emoji} {t.name}
-            </Link>
-          ))}
         </div>
 
         {/* Hero */}

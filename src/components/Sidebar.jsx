@@ -1,24 +1,19 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useLocation } from 'react-router-dom'
 import { getVolume, volumes } from '../data/courses'
+import { toolMenu } from '../data/tools'
 import { useProgress } from '../context/ProgressContext'
 
 export default function Sidebar({ open, onClose }) {
-  const { volId, partNum } = useParams()
-  const vol = getVolume(volId) || volumes[0]
-  const { isDone } = useProgress()
-
-  const days = vol.parts.filter((p) => p.kind === 'day')
-  const appendix = vol.parts.filter((p) => p.kind !== 'day')
+  const loc = useLocation()
+  const mode = loc.pathname.startsWith('/tools')
+    ? 'tools'
+    : loc.pathname.startsWith('/about')
+    ? 'about'
+    : 'vol'
 
   return (
     <>
-      {/* 모바일 오버레이 */}
-      {open && (
-        <div
-          className="fixed inset-0 z-30 bg-slate-900/40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
+      {open && <div className="fixed inset-0 z-30 bg-slate-900/40 lg:hidden" onClick={onClose} />}
 
       <aside
         className={`sidebar-scroll fixed left-0 top-14 z-30 h-[calc(100vh-3.5rem)] w-72 overflow-y-auto border-r border-slate-200 bg-white transition-transform lg:sticky lg:translate-x-0 ${
@@ -26,63 +21,9 @@ export default function Sidebar({ open, onClose }) {
         }`}
       >
         <div className="p-4">
-          {/* 권 선택 토글 */}
-          <div className="mb-4 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
-            {volumes.map((v) => (
-              <Link
-                key={v.id}
-                to={`/vol/${v.id}`}
-                onClick={onClose}
-                className={`rounded-lg py-2 text-center text-[12.5px] font-bold transition ${
-                  v.id === vol.id
-                    ? 'bg-brand-800 text-white shadow'
-                    : 'text-slate-500 hover:bg-white'
-                }`}
-              >
-                {v.id === 'vol1' ? '제1권' : '제2권'}
-              </Link>
-            ))}
-          </div>
-
-          <Link
-            to={`/vol/${vol.id}`}
-            onClick={onClose}
-            className="mb-3 block rounded-lg px-2 py-1.5 text-[12px] font-semibold text-brand-700 hover:bg-brand-50"
-          >
-            📋 과정 개요 보기
-          </Link>
-
-          <SectionLabel>DAY 1–6 · 본 과정</SectionLabel>
-          <nav className="mt-1.5 space-y-0.5">
-            {days.map((p) => (
-              <PartLink
-                key={p.num}
-                vol={vol}
-                part={p}
-                active={String(p.num) === String(partNum)}
-                done={isDone(vol.id, p.num)}
-                onClose={onClose}
-              />
-            ))}
-          </nav>
-
-          {appendix.length > 0 && (
-            <>
-              <SectionLabel className="mt-5">부록</SectionLabel>
-              <nav className="mt-1.5 space-y-0.5">
-                {appendix.map((p) => (
-                  <PartLink
-                    key={p.num}
-                    vol={vol}
-                    part={p}
-                    active={String(p.num) === String(partNum)}
-                    done={isDone(vol.id, p.num)}
-                    onClose={onClose}
-                  />
-                ))}
-              </nav>
-            </>
-          )}
+          {mode === 'vol' && <VolumeNav onClose={onClose} />}
+          {mode === 'tools' && <ToolsNav onClose={onClose} />}
+          {mode === 'about' && <AboutNav onClose={onClose} />}
         </div>
       </aside>
     </>
@@ -94,6 +35,60 @@ function SectionLabel({ children, className = '' }) {
     <div className={`px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 ${className}`}>
       {children}
     </div>
+  )
+}
+
+/* ---------------- 제1·2권 차례 ---------------- */
+function VolumeNav({ onClose }) {
+  const { volId, partNum } = useParams()
+  const vol = getVolume(volId) || volumes[0]
+  const { isDone } = useProgress()
+  const days = vol.parts.filter((p) => p.kind === 'day')
+  const appendix = vol.parts.filter((p) => p.kind !== 'day')
+
+  return (
+    <>
+      <div className="mb-4 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
+        {volumes.map((v) => (
+          <Link
+            key={v.id}
+            to={`/vol/${v.id}`}
+            onClick={onClose}
+            className={`rounded-lg py-2 text-center text-[12.5px] font-bold transition ${
+              v.id === vol.id ? 'bg-brand-800 text-white shadow' : 'text-slate-500 hover:bg-white'
+            }`}
+          >
+            {v.id === 'vol1' ? '제1권' : '제2권'}
+          </Link>
+        ))}
+      </div>
+
+      <Link
+        to={`/vol/${vol.id}`}
+        onClick={onClose}
+        className="mb-3 block rounded-lg px-2 py-1.5 text-[12px] font-semibold text-brand-700 hover:bg-brand-50"
+      >
+        📋 과정 개요 보기
+      </Link>
+
+      <SectionLabel>DAY 1–6 · 본 과정</SectionLabel>
+      <nav className="mt-1.5 space-y-0.5">
+        {days.map((p) => (
+          <PartLink key={p.num} vol={vol} part={p} active={String(p.num) === String(partNum)} done={isDone(vol.id, p.num)} onClose={onClose} />
+        ))}
+      </nav>
+
+      {appendix.length > 0 && (
+        <>
+          <SectionLabel className="mt-5">부록</SectionLabel>
+          <nav className="mt-1.5 space-y-0.5">
+            {appendix.map((p) => (
+              <PartLink key={p.num} vol={vol} part={p} active={String(p.num) === String(partNum)} done={isDone(vol.id, p.num)} onClose={onClose} />
+            ))}
+          </nav>
+        </>
+      )}
+    </>
   )
 }
 
@@ -109,27 +104,98 @@ function PartLink({ vol, part, active, done, onClose }) {
     >
       <span
         className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[10px] font-bold ${
-          done
-            ? 'bg-emerald-500 text-white'
-            : active
-            ? 'bg-brand-800 text-white'
-            : 'bg-slate-200 text-slate-500'
+          done ? 'bg-emerald-500 text-white' : active ? 'bg-brand-800 text-white' : 'bg-slate-200 text-slate-500'
         }`}
       >
         {done ? '✓' : part.kind === 'day' ? part.day : part.num}
       </span>
       <span className="min-w-0">
-        <span className={`block text-[10.5px] font-semibold ${active ? 'text-brand-600' : 'text-slate-400'}`}>
-          {dayLabel}
-        </span>
-        <span
-          className={`block text-[13px] leading-snug ${
-            active ? 'font-semibold text-brand-900' : 'text-slate-600'
-          }`}
-        >
-          {part.title}
-        </span>
+        <span className={`block text-[10.5px] font-semibold ${active ? 'text-brand-600' : 'text-slate-400'}`}>{dayLabel}</span>
+        <span className={`block text-[13px] leading-snug ${active ? 'font-semibold text-brand-900' : 'text-slate-600'}`}>{part.title}</span>
       </span>
     </Link>
+  )
+}
+
+/* ---------------- AI 도구 가이드 ---------------- */
+function ToolsNav({ onClose }) {
+  const loc = useLocation()
+  return (
+    <>
+      <SectionLabel>AI 도구 가이드</SectionLabel>
+      <Link
+        to="/tools"
+        onClick={onClose}
+        className={`mt-1.5 mb-2 block rounded-lg px-3 py-2 text-[13px] font-semibold transition ${
+          loc.pathname === '/tools' ? 'bg-brand-50 text-brand-800 ring-1 ring-brand-200' : 'text-brand-700 hover:bg-brand-50'
+        }`}
+      >
+        🧰 전체 보기
+      </Link>
+
+      <nav className="space-y-0.5">
+        {toolMenu.map((t) => {
+          const to = t.id === 'prompt' ? '/tools/prompt' : `/tools/${t.id}`
+          const active = loc.pathname === to
+          return (
+            <Link
+              key={t.id}
+              to={to}
+              onClick={onClose}
+              className={`flex items-center gap-2.5 rounded-lg px-3 py-2.5 transition ${
+                active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
+              }`}
+            >
+              <span className="text-lg">{t.emoji}</span>
+              <span className={`text-[13.5px] ${active ? 'font-bold text-brand-900' : 'font-medium text-slate-600'}`}>
+                {t.name}
+              </span>
+            </Link>
+          )
+        })}
+      </nav>
+
+      <div className="mt-5 rounded-xl bg-slate-50 p-3 text-[11.5px] leading-relaxed text-slate-400">
+        프롬프트 작성법과 5대 AI 도구의 강점·요금제·실무 활용을 정리했습니다.
+      </div>
+    </>
+  )
+}
+
+/* ---------------- About ---------------- */
+const ABOUT_SECTIONS = [
+  { id: 'purpose', label: '제작 의도', emoji: '🎯' },
+  { id: 'instructor', label: '강사 소개', emoji: '👨‍🏫' },
+  { id: 'company', label: '회사 소개', emoji: '🏢' },
+]
+
+function AboutNav({ onClose }) {
+  const go = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    onClose?.()
+  }
+  return (
+    <>
+      <SectionLabel>About</SectionLabel>
+      <nav className="mt-1.5 space-y-0.5">
+        {ABOUT_SECTIONS.map((s) => (
+          <button
+            key={s.id}
+            onClick={() => go(s.id)}
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left transition hover:bg-slate-50"
+          >
+            <span className="text-lg">{s.emoji}</span>
+            <span className="text-[13.5px] font-medium text-slate-600">{s.label}</span>
+          </button>
+        ))}
+      </nav>
+      <Link
+        to="/"
+        onClick={onClose}
+        className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
+      >
+        ← 홈으로
+      </Link>
+    </>
   )
 }
