@@ -4,6 +4,7 @@ import { useAuth } from './AuthContext'
 
 const ProgressContext = createContext(null)
 const KEY = 'bulid-progress-v1'
+const LAB_KEY = 'bulid-labs-v1'
 
 function loadLocal() {
   try {
@@ -15,10 +16,21 @@ function loadLocal() {
 function saveLocal(map) {
   localStorage.setItem(KEY, JSON.stringify(map))
 }
+function loadLabs() {
+  try {
+    return JSON.parse(localStorage.getItem(LAB_KEY)) || {}
+  } catch {
+    return {}
+  }
+}
+function saveLabs(map) {
+  localStorage.setItem(LAB_KEY, JSON.stringify(map))
+}
 
 export function ProgressProvider({ children }) {
   const { user } = useAuth()
   const [progress, setProgress] = useState(loadLocal)
+  const [labProgress, setLabProgress] = useState(loadLabs)
   const syncedUser = useRef(null)
 
   // 로그인 시: Supabase 진도 불러와 로컬과 병합, 로컬-only 항목은 업로드
@@ -103,8 +115,31 @@ export function ProgressProvider({ children }) {
     [progress]
   )
 
+  // ----- 실습(Labs) 완료: localStorage 기반 -----
+  const labKey = (volId, day, idx) => `${volId}/${day}/${idx}`
+  const isLabDone = useCallback(
+    (volId, day, idx) => !!labProgress[labKey(volId, day, idx)],
+    [labProgress]
+  )
+  const toggleLab = useCallback((volId, day, idx) => {
+    setLabProgress((prev) => {
+      const k = `${volId}/${day}/${idx}`
+      const next = { ...prev }
+      if (next[k]) delete next[k]
+      else next[k] = true
+      saveLabs(next)
+      return next
+    })
+  }, [])
+  const countLabsDone = useCallback(
+    (keys) => keys.filter((k) => labProgress[k]).length,
+    [labProgress]
+  )
+
   return (
-    <ProgressContext.Provider value={{ progress, isDone, setDone, toggle, countDone }}>
+    <ProgressContext.Provider
+      value={{ progress, isDone, setDone, toggle, countDone, labProgress, isLabDone, toggleLab, countLabsDone }}
+    >
       {children}
     </ProgressContext.Provider>
   )

@@ -3,12 +3,21 @@ import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import { volumes } from '../data/courses'
+import { labsByVol } from '../data/labs'
 import { useProgress } from '../context/ProgressContext'
 import { useAuth } from '../context/AuthContext'
 
 export default function Dashboard() {
-  const { isDone, countDone, setDone } = useProgress()
+  const { isDone, countDone, setDone, countLabsDone } = useProgress()
   const { user } = useAuth()
+
+  // 실습 집계
+  const allLabKeys = Object.entries(labsByVol).flatMap(([vid, v]) =>
+    v.days.flatMap((d) => d.labs.map((_, i) => `${vid}/${d.day}/${i}`))
+  )
+  const labTotal = allLabKeys.length
+  const labDone = countLabsDone(allLabKeys)
+  const labPct = labTotal ? Math.round((labDone / labTotal) * 100) : 0
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -128,6 +137,49 @@ export default function Dashboard() {
             )
           })}
         </div>
+
+        {/* 실습 따라하기 진행 */}
+        <section className="mt-10">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-brand-900">
+              <Icon name="fa-solid fa-flask-vial" className="text-brand-600" />
+              실습 따라하기 진행
+            </h2>
+            <span className="text-[13px] font-semibold text-slate-500">{labDone}/{labTotal} 완료 · {labPct}%</span>
+          </div>
+          <div className="space-y-5">
+            {Object.entries(labsByVol).map(([vid, v]) => (
+              <div key={vid} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="mb-3 text-[14px] font-extrabold text-brand-900">{v.title}</div>
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+                  {v.days.map((d) => {
+                    const keys = d.labs.map((_, i) => `${vid}/${d.day}/${i}`)
+                    const done = countLabsDone(keys)
+                    const all = done === d.labs.length && d.labs.length > 0
+                    const pct = Math.round((done / d.labs.length) * 100)
+                    return (
+                      <Link
+                        key={d.day}
+                        to={`/labs/${vid}/${d.day}`}
+                        className={`rounded-xl border p-3 text-center transition hover:shadow-sm ${
+                          all ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200 bg-white'
+                        }`}
+                      >
+                        <div className={`text-[12px] font-bold ${all ? 'text-emerald-700' : 'text-brand-800'}`}>
+                          DAY {d.day} {all && <Icon name="fa-solid fa-check" />}
+                        </div>
+                        <div className="mt-1 text-[11px] text-slate-500">{done}/{d.labs.length} 실습</div>
+                        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-100">
+                          <div className={`h-full rounded-full ${all ? 'bg-emerald-500' : 'bg-brand-500'}`} style={{ width: `${pct}%` }} />
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* 완주 배지 */}
         {doneCount === total && (

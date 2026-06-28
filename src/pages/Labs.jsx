@@ -3,6 +3,7 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import { labsByVol } from '../data/labs'
+import { useProgress } from '../context/ProgressContext'
 
 const VOLS = [
   { id: 'vol1', short: '제1권' },
@@ -122,6 +123,8 @@ function DayPage({ volId, data, dayData }) {
   const idx = data.days.findIndex((d) => d.day === dayData.day)
   const prev = data.days[idx - 1]
   const next = data.days[idx + 1]
+  const { isLabDone, toggleLab, countLabsDone } = useProgress()
+  const dayDoneCount = countLabsDone(dayData.labs.map((_, i) => `${volId}/${dayData.day}/${i}`))
 
   return (
     <Layout>
@@ -159,15 +162,19 @@ function DayPage({ volId, data, dayData }) {
             <div>
               <div className="text-[12px] font-bold text-signal-300">{data.label} · 실습 따라하기</div>
               <h1 className="mt-0.5 text-[22px] font-extrabold leading-snug">{dayData.subject}</h1>
-              <div className="mt-1 text-[13px] text-brand-100">실습 {dayData.labs.length}개 · 시간별 진행 가이드</div>
+              <div className="mt-1 text-[13px] text-brand-100">
+                실습 {dayData.labs.length}개 · 시간별 진행 가이드 · <span className="font-bold text-signal-300">완료 {dayDoneCount}/{dayData.labs.length}</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* 실습들 */}
         <div className="space-y-5">
-          {dayData.labs.map((lab, li) => (
-            <div key={li} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          {dayData.labs.map((lab, li) => {
+            const done = isLabDone(volId, dayData.day, li)
+            return (
+            <div key={li} className={`overflow-hidden rounded-2xl border bg-white shadow-sm ${done ? 'border-emerald-300' : 'border-slate-200'}`}>
               <div className="flex flex-wrap items-center gap-2.5 border-b border-slate-100 bg-slate-50 px-5 py-3.5">
                 <span className="shrink-0 rounded-md bg-brand-100 px-2 py-0.5 text-[11px] font-bold text-brand-700">{lab.code}</span>
                 {lab.level && (
@@ -179,6 +186,14 @@ function DayPage({ volId, data, dayData }) {
                   </span>
                 )}
                 <span className="text-[11px] text-slate-400">{lab.tool}</span>
+                <button
+                  onClick={() => toggleLab(volId, dayData.day, li)}
+                  className={`ml-auto shrink-0 rounded-lg px-3 py-1 text-[11.5px] font-bold transition ${
+                    done ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'border border-slate-300 text-slate-600 hover:bg-white'
+                  }`}
+                >
+                  <Icon name={done ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle'} /> {done ? '실습 완료' : '실습 완료 체크'}
+                </button>
               </div>
 
               <div className="p-5">
@@ -232,7 +247,8 @@ function DayPage({ volId, data, dayData }) {
                 )}
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* 이전/다음 DAY */}
