@@ -10,12 +10,15 @@ const NAV = [
   { to: '/vol/vol1', label: '제1권 교재' },
   { to: '/vol/vol2', label: '제2권 교재' },
   { to: '/schedule/vol1', label: '교육일정' },
-  { to: '/tools/prompt/learn', label: '프롬프트' },
+  { to: '/tools/prompt/learn', label: '프롬프트학습' },
+  { divider: true },
   { to: '/tools/chatgpt', label: 'ChatGPT' },
   { to: '/tools/claude', label: 'Claude' },
   { to: '/tools/gemini', label: 'Gemini' },
   { to: '/tools/genspark', label: 'Genspark' },
   { to: '/tools/perplexity', label: 'Perplexity' },
+  { divider: true },
+  { to: '/appendix', label: '부록' },
 ]
 
 function isActive(pathname, to) {
@@ -70,11 +73,15 @@ export default function Header({ onToggleSidebar }) {
 
         {/* 데스크톱 네비 (오른쪽 정렬) */}
         <nav className="ml-auto hidden items-center gap-0.5 lg:flex">
-          {NAV.map((item) => (
-            <NavTab key={item.to} to={item.to} active={isActive(loc.pathname, item.to)}>
-              {item.label}
-            </NavTab>
-          ))}
+          {NAV.map((item, i) =>
+            item.divider ? (
+              <span key={`d${i}`} className="mx-1.5 select-none text-slate-300">|</span>
+            ) : (
+              <NavTab key={item.to} to={item.to} active={isActive(loc.pathname, item.to)}>
+                {item.label}
+              </NavTab>
+            )
+          )}
         </nav>
 
         <div className="ml-auto flex items-center gap-2 lg:ml-3">
@@ -120,20 +127,24 @@ export default function Header({ onToggleSidebar }) {
       {menuOpen && (
         <div className="border-t border-slate-200 bg-white lg:hidden">
           <nav className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-1 px-4 py-3">
-            {NAV.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setMenuOpen(false)}
-                className={`rounded-lg px-3 py-2.5 text-[13.5px] font-semibold transition ${
-                  isActive(loc.pathname, item.to)
-                    ? 'bg-brand-50 text-brand-800'
-                    : 'text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV.map((item, i) =>
+              item.divider ? (
+                <div key={`d${i}`} className="col-span-2 my-1 border-t border-slate-100" />
+              ) : (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMenuOpen(false)}
+                  className={`rounded-lg px-3 py-2.5 text-[13.5px] font-semibold transition ${
+                    isActive(loc.pathname, item.to)
+                      ? 'bg-brand-50 text-brand-800'
+                      : 'text-slate-600 hover:bg-slate-100'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </nav>
         </div>
       )}

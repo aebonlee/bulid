@@ -11,6 +11,7 @@ import PromptLab from './pages/PromptLab'
 import About from './pages/About'
 import InstructorIntro from './pages/InstructorIntro'
 import CompanyIntro from './pages/CompanyIntro'
+import Appendix from './pages/Appendix'
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/about/instructor" element={<InstructorIntro />} />
           <Route path="/about/company" element={<CompanyIntro />} />
+          <Route path="/appendix" element={<Appendix />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ProgressProvider>

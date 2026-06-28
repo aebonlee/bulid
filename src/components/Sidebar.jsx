@@ -4,6 +4,7 @@ import { toolMenu, getTool, TOOL_PAGES } from '../data/tools'
 import { ABOUT_PAGES } from '../data/about'
 import { dayPlans } from '../data/dayplans'
 import { PROMPT_SECTIONS } from '../data/promptLab'
+import { appendix } from '../data/appendix'
 import Icon from './Icon'
 import { useProgress } from '../context/ProgressContext'
 
@@ -15,6 +16,8 @@ export default function Sidebar({ open, onClose }) {
     ? 'about'
     : loc.pathname.startsWith('/schedule')
     ? 'schedule'
+    : loc.pathname.startsWith('/appendix')
+    ? 'appendix'
     : 'vol'
 
   return (
@@ -31,6 +34,7 @@ export default function Sidebar({ open, onClose }) {
           {mode === 'tools' && <ToolsNav onClose={onClose} />}
           {mode === 'about' && <AboutNav onClose={onClose} />}
           {mode === 'schedule' && <ScheduleNav onClose={onClose} />}
+          {mode === 'appendix' && <AppendixNav onClose={onClose} />}
         </div>
       </aside>
     </>
@@ -350,6 +354,38 @@ function ScheduleNav({ onClose }) {
         className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
       >
         <Icon name="fa-solid fa-book" /> 교재 전체 목차 보기
+      </Link>
+    </>
+  )
+}
+
+/* ---------------- 부록 ---------------- */
+function AppendixNav({ onClose }) {
+  const go = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    onClose?.()
+  }
+  return (
+    <>
+      <SectionLabel>부록 · 업무별 프롬프트</SectionLabel>
+      <nav className="mt-1.5 space-y-0.5">
+        {appendix.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => go(cat.id)}
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left transition hover:bg-slate-50"
+          >
+            <span className="w-5 text-center text-brand-600"><Icon name={cat.icon} /></span>
+            <span className="text-[13px] font-medium text-slate-600">{cat.category}</span>
+          </button>
+        ))}
+      </nav>
+      <Link
+        to="/tools/prompt/learn"
+        onClick={onClose}
+        className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
+      >
+        <Icon name="fa-solid fa-pen-nib" /> 프롬프트학습 바로가기
       </Link>
     </>
   )
