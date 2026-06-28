@@ -22,7 +22,7 @@ function isActive(pathname, to) {
   if (to === '/about') return pathname.startsWith('/about')
   if (to.startsWith('/schedule')) return pathname.startsWith('/schedule')
   if (to.startsWith('/tools/prompt')) return pathname.startsWith('/tools/prompt')
-  if (to.startsWith('/tools/')) return pathname === to
+  if (to.startsWith('/tools/')) return pathname.startsWith(to)
   if (to === '/vol/vol1') return pathname.startsWith('/vol/vol1')
   if (to === '/vol/vol2') return pathname.startsWith('/vol/vol2')
   return pathname === to

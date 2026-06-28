@@ -3,7 +3,15 @@
 // 해당 커리큘럼으로 딥링크하고, Perplexity는 신규 정리.
 // ※ 요금제·모델명·기능은 변동될 수 있으므로 강의/실사용 전 공식 사이트에서 재확인 필요.
 
-// 도구 상세 페이지의 표준 섹션(좌측 메뉴 앵커와 공유)
+// 도구별 하위 페이지(좌측 메뉴 = 라우트로 분리)
+export const TOOL_PAGES = [
+  { id: 'overview', label: '개요 · 시작하기', short: '개요', icon: 'fa-solid fa-circle-info', desc: '소개·강점·요금제·시작법' },
+  { id: 'features', label: '기능 상세', short: '기능', icon: 'fa-solid fa-wand-magic-sparkles', desc: '핵심 기능별 사용법' },
+  { id: 'practice', label: '실무 · 실습', short: '실습', icon: 'fa-solid fa-flask', desc: '직무 활용·단계별 실습' },
+  { id: 'prompts', label: '프롬프트 · 팁', short: '프롬프트', icon: 'fa-solid fa-terminal', desc: '추천 프롬프트·팁·한계' },
+]
+
+// (구) 단일 페이지 앵커용 — 호환 유지
 export const TOOL_SECTIONS = [
   { id: 'overview', label: '개요', icon: 'fa-solid fa-book-open' },
   { id: 'start', label: '시작하기', icon: 'fa-solid fa-circle-play' },

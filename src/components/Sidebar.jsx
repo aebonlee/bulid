@@ -1,6 +1,6 @@
 import { Link, useParams, useLocation } from 'react-router-dom'
 import { getVolume, volumes } from '../data/courses'
-import { toolMenu, getTool, TOOL_SECTIONS } from '../data/tools'
+import { toolMenu, getTool, TOOL_PAGES } from '../data/tools'
 import { ABOUT_PAGES } from '../data/about'
 import { dayPlans } from '../data/dayplans'
 import { PROMPT_SECTIONS } from '../data/promptLab'
@@ -139,7 +139,7 @@ function VolumeNav({ onClose }) {
 /* ---------------- AI 도구 가이드 ---------------- */
 function ToolsNav({ onClose }) {
   const loc = useLocation()
-  const { toolId } = useParams()
+  const { toolId, section } = useParams()
 
   // 프롬프트 영역이면 5개 하위 메뉴를 보여준다
   if (loc.pathname.startsWith('/tools/prompt')) {
@@ -191,13 +191,9 @@ function ToolsNav({ onClose }) {
     )
   }
 
-  // 개별 도구 상세 페이지면 그 도구의 섹션 메뉴를 보여준다
+  // 개별 도구 상세 페이지면 그 도구의 하위 페이지 메뉴를 보여준다
   const tool = toolId && toolId !== 'prompt' ? getTool(toolId) : null
-
-  const goSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    onClose?.()
-  }
+  const curSection = section || 'overview'
 
   if (tool) {
     return (
@@ -211,18 +207,27 @@ function ToolsNav({ onClose }) {
           </div>
         </div>
 
-        <SectionLabel>이 도구 메뉴</SectionLabel>
+        <SectionLabel>{tool.name} 메뉴</SectionLabel>
         <nav className="mt-1.5 space-y-0.5">
-          {TOOL_SECTIONS.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => goSection(s.id)}
-              className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left transition hover:bg-slate-50"
-            >
-              <span className="w-5 text-center text-brand-600"><Icon name={s.icon} /></span>
-              <span className="text-[13px] font-medium text-slate-600">{s.label}</span>
-            </button>
-          ))}
+          {TOOL_PAGES.map((p) => {
+            const active = p.id === curSection
+            return (
+              <Link
+                key={p.id}
+                to={`/tools/${tool.id}/${p.id}`}
+                onClick={onClose}
+                className={`flex items-start gap-2.5 rounded-lg px-3 py-2 transition ${
+                  active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
+                }`}
+              >
+                <span className="mt-0.5 w-5 text-center text-brand-600"><Icon name={p.icon} /></span>
+                <span className="min-w-0">
+                  <span className={`block text-[13px] ${active ? 'font-bold text-brand-900' : 'font-medium text-slate-600'}`}>{p.label}</span>
+                  <span className="block text-[11px] text-slate-400">{p.desc}</span>
+                </span>
+              </Link>
+            )
+          })}
         </nav>
 
         <SectionLabel className="mt-5">다른 도구</SectionLabel>

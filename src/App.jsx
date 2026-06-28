@@ -25,6 +25,7 @@ export default function App() {
           <Route path="/tools/prompt" element={<Navigate to="/tools/prompt/learn" replace />} />
           <Route path="/tools/prompt/:section" element={<PromptLab />} />
           <Route path="/tools/:toolId" element={<ToolPage />} />
+          <Route path="/tools/:toolId/:section" element={<ToolPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/about/instructor" element={<InstructorIntro />} />
           <Route path="/about/company" element={<CompanyIntro />} />
