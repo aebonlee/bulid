@@ -118,6 +118,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* AI 도구 가이드 배너 */}
+      <section className="mx-auto max-w-screen-xl px-5 pb-16">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="grid md:grid-cols-2">
+            <Link
+              to="/tools"
+              className="group flex items-center gap-4 border-b border-slate-200 p-6 transition hover:bg-slate-50 md:border-b-0 md:border-r"
+            >
+              <span className="text-4xl">🧰</span>
+              <div>
+                <div className="text-[16px] font-extrabold text-brand-900">AI 도구 가이드</div>
+                <div className="mt-0.5 text-[13px] text-slate-500">
+                  프롬프트 · ChatGPT · Claude · Gemini · Genspark · Perplexity 정리
+                </div>
+                <div className="mt-1.5 text-[12.5px] font-bold text-brand-700 group-hover:underline">
+                  바로가기 →
+                </div>
+              </div>
+            </Link>
+            <Link
+              to="/about"
+              className="group flex items-center gap-4 p-6 transition hover:bg-slate-50"
+            >
+              <span className="text-4xl">ℹ️</span>
+              <div>
+                <div className="text-[16px] font-extrabold text-brand-900">소개 (About)</div>
+                <div className="mt-0.5 text-[13px] text-slate-500">
+                  제작 의도 · 강사 소개 · 회사 소개
+                </div>
+                <div className="mt-1.5 text-[12.5px] font-bold text-brand-700 group-hover:underline">
+                  바로가기 →
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-slate-200 bg-white py-8">
         <div className="mx-auto max-w-screen-xl px-5 text-center text-[12.5px] text-slate-400">
           2026년 산업전문인력 AI역량강화 (건설기계) · 건설기계산업 AX 전환 실행역량 강화

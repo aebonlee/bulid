@@ -49,6 +49,12 @@ export default function Header({ onToggleSidebar }) {
           <NavTab to="/vol/vol2" active={loc.pathname.includes('vol2')}>
             제2권
           </NavTab>
+          <NavTab to="/tools" active={loc.pathname.startsWith('/tools')}>
+            AI 도구
+          </NavTab>
+          <NavTab to="/about" active={loc.pathname.startsWith('/about')}>
+            About
+          </NavTab>
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
