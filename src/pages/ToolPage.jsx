@@ -245,6 +245,37 @@ export default function ToolPage() {
               </Card>
             )}
 
+            {tool.recommendedPrompts?.length > 0 && (
+              <Card id="prompts" title="이 과정용 추천 프롬프트" icon="fa-solid fa-terminal">
+                <p className="-mt-2 mb-4 text-[13px] text-slate-500">
+                  건설기계 과정에 바로 쓰는 프롬프트입니다. <b>[대괄호]</b>만 상황에 맞게 바꿔 사용하세요.
+                </p>
+                <div className="space-y-3">
+                  {tool.recommendedPrompts.map((p, i) => (
+                    <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                      <div className="mb-1.5 text-[13.5px] font-bold text-brand-900">{p.title}</div>
+                      <pre className="whitespace-pre-wrap break-words rounded-lg border border-slate-700 bg-slate-900 p-3.5 font-mono text-[12.5px] leading-relaxed text-slate-100">
+                        {p.prompt}
+                      </pre>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
+
+            {tool.limits?.length > 0 && (
+              <Card id="limits" title="한계와 주의점" icon="fa-solid fa-triangle-exclamation">
+                <ul className="space-y-2">
+                  {tool.limits.map((l, i) => (
+                    <li key={i} className="flex gap-2.5 rounded-lg bg-rose-50 p-3 text-[14px] leading-relaxed text-slate-700">
+                      <Icon name="fa-solid fa-circle-exclamation" className="mt-0.5 shrink-0 text-rose-500" />
+                      <span>{l}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            )}
+
             <Card id="tips" title="활용 팁" icon="fa-solid fa-lightbulb">
               <ul className="space-y-2">
                 {tool.promptTips.map((t, i) => (

@@ -4,7 +4,54 @@ import Layout from '../components/Layout'
 import BlockRenderer from '../components/BlockRenderer'
 import Icon from '../components/Icon'
 import { getVolume, getPart } from '../data/courses'
+import { dayPlans } from '../data/dayplans'
 import { useProgress } from '../context/ProgressContext'
+
+const BLOCK_STYLE = {
+  도입: { dot: 'bg-slate-400', tag: 'bg-slate-100 text-slate-600' },
+  학습: { dot: 'bg-sky-500', tag: 'bg-sky-100 text-sky-700' },
+  실습: { dot: 'bg-signal-500', tag: 'bg-signal-100 text-signal-700' },
+  점심: { dot: 'bg-slate-300', tag: 'bg-slate-100 text-slate-400' },
+  정리: { dot: 'bg-emerald-500', tag: 'bg-emerald-100 text-emerald-700' },
+}
+
+function DayPlan({ plan }) {
+  if (!plan) return null
+  return (
+    <details open className="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm [&_summary]:list-none">
+      <summary className="flex cursor-pointer items-center gap-3 bg-brand-50 px-5 py-4 hover:bg-brand-100/60">
+        <Icon name="fa-solid fa-clock" className="text-brand-700" />
+        <div className="flex-1">
+          <div className="text-[15px] font-extrabold text-brand-900">DAY {plan.day} · 8시간 교육 운영안</div>
+          <div className="text-[12px] text-slate-500">학습과 실습을 병행하는 하루 일정 (09:00–18:00 기준, 운영에 따라 조정)</div>
+        </div>
+        <span className="text-slate-400 transition group-open:rotate-180">▾</span>
+      </summary>
+
+      <div className="divide-y divide-slate-100 px-2 py-2">
+        {plan.blocks.map((b, i) => {
+          const st = BLOCK_STYLE[b.type] || BLOCK_STYLE['학습']
+          return (
+            <div key={i} className="flex items-start gap-3 px-3 py-2.5">
+              <div className="w-[92px] shrink-0 pt-0.5 font-mono text-[12px] font-semibold text-slate-500">
+                {b.start}–{b.end}
+              </div>
+              <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${st.dot}`} />
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className={`rounded px-1.5 py-0.5 text-[10.5px] font-bold ${st.tag}`}>{b.type}</span>
+                  <span className="text-[14px] font-bold text-brand-900">{b.title}</span>
+                  {b.star && <span className="text-[11px] font-bold text-signal-600">★ BIG WIN</span>}
+                </div>
+                {b.desc && <div className="mt-0.5 text-[12.5px] leading-relaxed text-slate-500">{b.desc}</div>}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </details>
+  )
+}
 
 export default function PartPage() {
   const { volId, partNum } = useParams()
@@ -51,6 +98,8 @@ export default function PartPage() {
             </div>
             <h1 className="text-[26px] font-extrabold leading-tight text-brand-900">{part.title}</h1>
           </div>
+
+          {part.kind === 'day' && <DayPlan plan={dayPlans[vol.id]?.[String(part.num)]} />}
 
           {part.intro?.length > 0 && (
             <div className="mb-8">

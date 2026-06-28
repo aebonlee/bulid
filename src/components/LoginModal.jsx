@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useAuth } from '../context/AuthContext'
 import Icon from './Icon'
 
@@ -5,9 +6,10 @@ export default function LoginModal({ open, onClose }) {
   const { signInWith } = useAuth()
   if (!open) return null
 
-  return (
+  // 헤더의 backdrop-blur가 fixed의 containing block이 되는 문제 → body로 포털 렌더
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
@@ -60,6 +62,7 @@ export default function LoginModal({ open, onClose }) {
           닫기
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

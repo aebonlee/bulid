@@ -11,11 +11,13 @@ import {
   scoreSample,
   scenarios,
   evaluatePrompt,
+  promptLibrary,
 } from '../data/promptLab'
 
 const TABS = [
   { id: 'learn', label: '학습하기', icon: 'fa-solid fa-book' },
   { id: 'pattern', label: '실전 패턴', icon: 'fa-solid fa-puzzle-piece' },
+  { id: 'library', label: '과목별 프롬프트', icon: 'fa-solid fa-folder-tree' },
   { id: 'practice', label: '평가 실습', icon: 'fa-solid fa-bullseye' },
 ]
 
@@ -68,6 +70,7 @@ export default function PromptLab() {
 
         {tab === 'learn' && <LearnTab />}
         {tab === 'pattern' && <PatternTab />}
+        {tab === 'library' && <LibraryTab />}
         {tab === 'practice' && <PracticeTab />}
       </div>
     </Layout>
@@ -217,6 +220,62 @@ function PatternTab() {
           ))}
         </ul>
       </Card>
+    </>
+  )
+}
+
+/* ---------------- 과목별 프롬프트 ---------------- */
+function CopyButton({ text }) {
+  const [done, setDone] = useState(false)
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setDone(true)
+      setTimeout(() => setDone(false), 1500)
+    } catch {
+      /* ignore */
+    }
+  }
+  return (
+    <button
+      onClick={copy}
+      className={`shrink-0 rounded-lg px-2.5 py-1 text-[11.5px] font-bold transition ${
+        done ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
+      }`}
+    >
+      <Icon name={done ? 'fa-solid fa-check' : 'fa-regular fa-copy'} /> {done ? '복사됨' : '복사'}
+    </button>
+  )
+}
+
+function LibraryTab() {
+  return (
+    <>
+      <Card title="과목별 프롬프트 라이브러리" icon="fa-solid fa-folder-tree">
+        <p className="-mt-2 text-[13.5px] leading-relaxed text-slate-600">
+          강의 커리큘럼(제1·2권 6일)에 맞춘 즉시 사용 프롬프트입니다. <b>[대괄호]</b> 부분만 우리 상황에 맞게
+          바꿔 ChatGPT·Claude·Gemini 등에 붙여 넣으세요.
+        </p>
+      </Card>
+
+      {promptLibrary.map((group) => (
+        <Card key={group.subject} title={group.subject} icon={group.icon}>
+          <div className="space-y-4">
+            {group.prompts.map((p, i) => (
+              <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <div className="mb-1 flex items-start justify-between gap-3">
+                  <div className="text-[14px] font-bold text-brand-900">{p.title}</div>
+                  <CopyButton text={p.prompt} />
+                </div>
+                <div className="mb-2 text-[12.5px] text-slate-500">{p.use}</div>
+                <pre className="whitespace-pre-wrap break-words rounded-lg border border-slate-700 bg-slate-900 p-3.5 font-mono text-[12.5px] leading-relaxed text-slate-100">
+                  {p.prompt}
+                </pre>
+              </div>
+            ))}
+          </div>
+        </Card>
+      ))}
     </>
   )
 }
