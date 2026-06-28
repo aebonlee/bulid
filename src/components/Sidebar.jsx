@@ -2,6 +2,7 @@ import { Link, useParams, useLocation } from 'react-router-dom'
 import { getVolume, volumes } from '../data/courses'
 import { toolMenu, getTool, TOOL_SECTIONS } from '../data/tools'
 import { ABOUT_PAGES } from '../data/about'
+import { dayPlans } from '../data/dayplans'
 import Icon from './Icon'
 import { useProgress } from '../context/ProgressContext'
 
@@ -11,6 +12,8 @@ export default function Sidebar({ open, onClose }) {
     ? 'tools'
     : loc.pathname.startsWith('/about')
     ? 'about'
+    : loc.pathname.startsWith('/schedule')
+    ? 'schedule'
     : 'vol'
 
   return (
@@ -26,6 +29,7 @@ export default function Sidebar({ open, onClose }) {
           {mode === 'vol' && <VolumeNav onClose={onClose} />}
           {mode === 'tools' && <ToolsNav onClose={onClose} />}
           {mode === 'about' && <AboutNav onClose={onClose} />}
+          {mode === 'schedule' && <ScheduleNav onClose={onClose} />}
         </div>
       </aside>
     </>
@@ -68,9 +72,16 @@ function VolumeNav({ onClose }) {
       <Link
         to={`/vol/${vol.id}`}
         onClick={onClose}
+        className="mb-1.5 block rounded-lg px-2 py-1.5 text-[12px] font-semibold text-brand-700 hover:bg-brand-50"
+      >
+        <Icon name="fa-solid fa-list-ol" /> 교재 전체 목차
+      </Link>
+      <Link
+        to={`/schedule/${vol.id}`}
+        onClick={onClose}
         className="mb-3 block rounded-lg px-2 py-1.5 text-[12px] font-semibold text-brand-700 hover:bg-brand-50"
       >
-        <Icon name="fa-solid fa-clipboard-list" /> 과정 개요 보기
+        <Icon name="fa-solid fa-calendar-days" /> 날짜별 교육 일정
       </Link>
 
       <SectionLabel>DAY 1–6 · 본 과정</SectionLabel>
@@ -222,6 +233,62 @@ function ToolsNav({ onClose }) {
       <div className="mt-5 rounded-xl bg-slate-50 p-3 text-[11.5px] leading-relaxed text-slate-400">
         프롬프트 작성법과 5대 AI 도구의 강점·요금제·실무 활용·실습 사례를 정리했습니다.
       </div>
+    </>
+  )
+}
+
+/* ---------------- 교육 일정 ---------------- */
+function ScheduleNav({ onClose }) {
+  const { volId } = useParams()
+  const vid = getVolume(volId) ? volId : 'vol1'
+  const plans = Object.values(dayPlans[vid] || {}).sort((a, b) => a.day - b.day)
+  const go = (d) => {
+    document.getElementById(`day-${d}`)?.scrollIntoView({ behavior: 'smooth' })
+    onClose?.()
+  }
+  return (
+    <>
+      <div className="mb-4 grid grid-cols-2 gap-1.5 rounded-xl bg-slate-100 p-1">
+        {volumes.map((v) => (
+          <Link
+            key={v.id}
+            to={`/schedule/${v.id}`}
+            onClick={onClose}
+            className={`rounded-lg py-2 text-center text-[12.5px] font-bold transition ${
+              v.id === vid ? 'bg-brand-800 text-white shadow' : 'text-slate-500 hover:bg-white'
+            }`}
+          >
+            {v.id === 'vol1' ? '제1권' : '제2권'}
+          </Link>
+        ))}
+      </div>
+
+      <SectionLabel>교육 일정 · DAY</SectionLabel>
+      <nav className="mt-1.5 space-y-0.5">
+        {plans.map((p) => (
+          <button
+            key={p.day}
+            onClick={() => go(p.day)}
+            className="flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-left transition hover:bg-slate-50"
+          >
+            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-800 text-[10px] font-bold text-white">
+              {p.day}
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[10.5px] font-semibold text-slate-400">DAY {p.day}</span>
+              <span className="block text-[13px] leading-snug text-slate-600">{p.title}</span>
+            </span>
+          </button>
+        ))}
+      </nav>
+
+      <Link
+        to={`/vol/${vid}`}
+        onClick={onClose}
+        className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
+      >
+        <Icon name="fa-solid fa-book" /> 교재 전체 목차 보기
+      </Link>
     </>
   )
 }

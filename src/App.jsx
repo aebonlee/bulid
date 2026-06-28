@@ -4,6 +4,7 @@ import { ProgressProvider } from './context/ProgressContext'
 import Home from './pages/Home'
 import VolumeOverview from './pages/VolumeOverview'
 import PartPage from './pages/PartPage'
+import Schedule from './pages/Schedule'
 import ToolsHome from './pages/ToolsHome'
 import ToolPage from './pages/ToolPage'
 import PromptLab from './pages/PromptLab'
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/vol/:volId" element={<VolumeOverview />} />
           <Route path="/vol/:volId/part/:partNum" element={<PartPage />} />
+          <Route path="/schedule/:volId" element={<Schedule />} />
           <Route path="/tools" element={<ToolsHome />} />
           <Route path="/tools/prompt" element={<PromptLab />} />
           <Route path="/tools/:toolId" element={<ToolPage />} />

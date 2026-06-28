@@ -7,8 +7,9 @@ import Icon from './Icon'
 // 전역 네비게이션 — About 최우선, 4대 AI 도구는 개별 메뉴
 const NAV = [
   { to: '/about', label: 'About' },
-  { to: '/vol/vol1', label: '제1권' },
-  { to: '/vol/vol2', label: '제2권' },
+  { to: '/vol/vol1', label: '제1권 교재' },
+  { to: '/vol/vol2', label: '제2권 교재' },
+  { to: '/schedule/vol1', label: '교육일정' },
   { to: '/tools/prompt', label: '프롬프트' },
   { to: '/tools/chatgpt', label: 'ChatGPT' },
   { to: '/tools/claude', label: 'Claude' },
@@ -19,9 +20,10 @@ const NAV = [
 
 function isActive(pathname, to) {
   if (to === '/about') return pathname.startsWith('/about')
+  if (to.startsWith('/schedule')) return pathname.startsWith('/schedule')
   if (to.startsWith('/tools/')) return pathname === to
-  if (to === '/vol/vol1') return pathname.includes('vol1')
-  if (to === '/vol/vol2') return pathname.includes('vol2')
+  if (to === '/vol/vol1') return pathname.startsWith('/vol/vol1')
+  if (to === '/vol/vol2') return pathname.startsWith('/vol/vol2')
   return pathname === to
 }
 
