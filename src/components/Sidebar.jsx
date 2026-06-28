@@ -3,6 +3,7 @@ import { getVolume, volumes } from '../data/courses'
 import { toolMenu, getTool, TOOL_SECTIONS } from '../data/tools'
 import { ABOUT_PAGES } from '../data/about'
 import { dayPlans } from '../data/dayplans'
+import { PROMPT_SECTIONS } from '../data/promptLab'
 import Icon from './Icon'
 import { useProgress } from '../context/ProgressContext'
 
@@ -139,7 +140,58 @@ function VolumeNav({ onClose }) {
 function ToolsNav({ onClose }) {
   const loc = useLocation()
   const { toolId } = useParams()
-  // 개별 도구 상세 페이지(프롬프트 제외)면 그 도구의 섹션 메뉴를 보여준다
+
+  // 프롬프트 영역이면 5개 하위 메뉴를 보여준다
+  if (loc.pathname.startsWith('/tools/prompt')) {
+    return (
+      <>
+        <div className="mb-3 flex items-center gap-2.5 rounded-xl bg-signal-50 px-3 py-2.5">
+          <span className="text-[17px] text-signal-600"><Icon name="fa-solid fa-pen-nib" /></span>
+          <div className="text-[14px] font-extrabold text-brand-900">프롬프트</div>
+        </div>
+
+        <SectionLabel>프롬프트 메뉴</SectionLabel>
+        <nav className="mt-1.5 space-y-0.5">
+          {PROMPT_SECTIONS.map((s) => {
+            const active = loc.pathname === `/tools/prompt/${s.id}`
+            return (
+              <Link
+                key={s.id}
+                to={`/tools/prompt/${s.id}`}
+                onClick={onClose}
+                className={`flex items-start gap-2.5 rounded-lg px-3 py-2 transition ${
+                  active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
+                }`}
+              >
+                <span className="mt-0.5 w-5 text-center text-brand-600"><Icon name={s.icon} /></span>
+                <span className="min-w-0">
+                  <span className={`block text-[13px] ${active ? 'font-bold text-brand-900' : 'font-medium text-slate-600'}`}>{s.label}</span>
+                  <span className="block text-[11px] text-slate-400">{s.desc}</span>
+                </span>
+              </Link>
+            )
+          })}
+        </nav>
+
+        <SectionLabel className="mt-5">다른 도구</SectionLabel>
+        <nav className="mt-1.5 space-y-0.5">
+          {toolMenu.filter((t) => t.id !== 'prompt').map((t) => (
+            <Link
+              key={t.id}
+              to={`/tools/${t.id}`}
+              onClick={onClose}
+              className="flex items-center gap-2.5 rounded-lg px-3 py-2 transition hover:bg-slate-50"
+            >
+              <span className="w-5 text-center text-slate-500"><Icon name={t.icon} /></span>
+              <span className="text-[12.5px] text-slate-500">{t.name}</span>
+            </Link>
+          ))}
+        </nav>
+      </>
+    )
+  }
+
+  // 개별 도구 상세 페이지면 그 도구의 섹션 메뉴를 보여준다
   const tool = toolId && toolId !== 'prompt' ? getTool(toolId) : null
 
   const goSection = (id) => {
