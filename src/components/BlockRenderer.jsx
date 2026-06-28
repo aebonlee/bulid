@@ -121,7 +121,7 @@ function Callout({ tone, label, icon, children }) {
           <span>{label}</span>
         </div>
       )}
-      <div className="text-[14.5px] leading-relaxed text-slate-700">{children}</div>
+      <div className="whitespace-pre-line text-[14.5px] leading-relaxed text-slate-700">{children}</div>
     </div>
   )
 }
@@ -132,6 +132,12 @@ function stripBracketPrefix(text) {
   return m ? { label: m[1], body: m[2] } : { label: null, body: text }
 }
 
+// 마침표 뒤 줄바꿈 — 소수점/약어(예: 6.7%, v.0.5)는 보호(마침표+공백만 분리)
+function br(text) {
+  if (!text) return text
+  return text.replace(/([^0-9])\.\s+/g, '$1.\n')
+}
+
 export default function BlockRenderer({ blocks }) {
   if (!blocks?.length) return null
   return (
@@ -140,8 +146,8 @@ export default function BlockRenderer({ blocks }) {
         switch (b.type) {
           case 'para':
             return (
-              <p key={i} className="my-3.5 leading-[1.9] text-[16.5px] text-slate-700">
-                {b.text}
+              <p key={i} className="my-3.5 whitespace-pre-line leading-[1.9] text-[16.5px] text-slate-700">
+                {br(b.text)}
               </p>
             )
 
@@ -217,7 +223,7 @@ export default function BlockRenderer({ blocks }) {
             const { body } = stripBracketPrefix(b.text)
             return (
               <Callout key={i} tone="tip" label="Tip" icon="fa-solid fa-lightbulb">
-                {body}
+                {br(body)}
               </Callout>
             )
           }
@@ -227,7 +233,7 @@ export default function BlockRenderer({ blocks }) {
             const m = b.text.match(/^\[?(실습[^\]]*)\]?\s*(.*)$/s)
             return (
               <Callout key={i} tone="exercise" label={m ? m[1] : '실습'} icon="fa-solid fa-pen">
-                {m ? m[2] : body}
+                {br(m ? m[2] : body)}
               </Callout>
             )
           }
@@ -236,7 +242,7 @@ export default function BlockRenderer({ blocks }) {
             const m = b.text.match(/^\[([^\]]+)\]\s*(.*)$/s)
             return (
               <Callout key={i} tone="case" label={m ? m[1] : '사례'} icon="fa-solid fa-thumbtack">
-                {m ? m[2] : b.text}
+                {br(m ? m[2] : b.text)}
               </Callout>
             )
           }
@@ -244,21 +250,21 @@ export default function BlockRenderer({ blocks }) {
           case 'link':
             return (
               <Callout key={i} tone="link" label="연계 학습" icon="fa-solid fa-link">
-                {b.text.replace(/^📖\s*/, '')}
+                {br(b.text.replace(/^📖\s*/, ''))}
               </Callout>
             )
 
           case 'warning':
             return (
               <Callout key={i} tone="warning" label="유의" icon="fa-solid fa-triangle-exclamation">
-                {b.text.replace(/^⚠️\s*/, '')}
+                {br(b.text.replace(/^⚠️\s*/, ''))}
               </Callout>
             )
 
           case 'outcome':
             return (
               <Callout key={i} tone="outcome" label="핵심 산출물" icon="fa-solid fa-box">
-                {b.text.replace(/^▶\s*/, '')}
+                {br(b.text.replace(/^▶\s*/, ''))}
               </Callout>
             )
 
