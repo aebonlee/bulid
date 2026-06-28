@@ -1,6 +1,6 @@
 import { Link, useParams, useLocation } from 'react-router-dom'
 import { getVolume, volumes } from '../data/courses'
-import { toolMenu } from '../data/tools'
+import { toolMenu, getTool, TOOL_SECTIONS } from '../data/tools'
 import { useProgress } from '../context/ProgressContext'
 
 export default function Sidebar({ open, onClose }) {
@@ -120,6 +120,68 @@ function PartLink({ vol, part, active, done, onClose }) {
 /* ---------------- AI 도구 가이드 ---------------- */
 function ToolsNav({ onClose }) {
   const loc = useLocation()
+  const { toolId } = useParams()
+  // 개별 도구 상세 페이지(프롬프트 제외)면 그 도구의 섹션 메뉴를 보여준다
+  const tool = toolId && toolId !== 'prompt' ? getTool(toolId) : null
+
+  const goSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    onClose?.()
+  }
+
+  if (tool) {
+    return (
+      <>
+        {/* 현재 도구 헤더 */}
+        <div className="mb-3 flex items-center gap-2.5 rounded-xl bg-brand-50 px-3 py-2.5">
+          <span className="text-xl">{tool.emoji}</span>
+          <div className="leading-tight">
+            <div className="text-[14px] font-extrabold text-brand-900">{tool.name}</div>
+            <div className="text-[10.5px] text-slate-400">{tool.vendor}</div>
+          </div>
+        </div>
+
+        <SectionLabel>이 도구 메뉴</SectionLabel>
+        <nav className="mt-1.5 space-y-0.5">
+          {TOOL_SECTIONS.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => goSection(s.id)}
+              className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left transition hover:bg-slate-50"
+            >
+              <span className="text-[15px]">{s.emoji}</span>
+              <span className="text-[13px] font-medium text-slate-600">{s.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        <SectionLabel className="mt-5">다른 도구</SectionLabel>
+        <nav className="mt-1.5 space-y-0.5">
+          {toolMenu.map((t) => {
+            const to = t.id === 'prompt' ? '/tools/prompt' : `/tools/${t.id}`
+            const active = t.id === tool.id
+            return (
+              <Link
+                key={t.id}
+                to={to}
+                onClick={onClose}
+                className={`flex items-center gap-2.5 rounded-lg px-3 py-2 transition ${
+                  active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
+                }`}
+              >
+                <span>{t.emoji}</span>
+                <span className={`text-[12.5px] ${active ? 'font-bold text-brand-900' : 'text-slate-500'}`}>
+                  {t.name}
+                </span>
+              </Link>
+            )
+          })}
+        </nav>
+      </>
+    )
+  }
+
+  // /tools 또는 /tools/prompt → 전체 도구 목록
   return (
     <>
       <SectionLabel>AI 도구 가이드</SectionLabel>
@@ -156,7 +218,7 @@ function ToolsNav({ onClose }) {
       </nav>
 
       <div className="mt-5 rounded-xl bg-slate-50 p-3 text-[11.5px] leading-relaxed text-slate-400">
-        프롬프트 작성법과 5대 AI 도구의 강점·요금제·실무 활용을 정리했습니다.
+        프롬프트 작성법과 5대 AI 도구의 강점·요금제·실무 활용·실습 사례를 정리했습니다.
       </div>
     </>
   )
