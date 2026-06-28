@@ -25,6 +25,17 @@ export const labsByVol = {
             ],
             deliverable: '4대 도구 비교 표 + 내 직무에 맞는 도구 1순위',
           },
+          {
+            code: "실습 1-2", level: "입문", tool: "ChatGPT·Claude",
+            title: "약한 프롬프트를 5요소로 다시 써서 점수 올리기",
+            goal: "막연한 프롬프트를 역할·맥락·과제·제약·출력형식으로 보강해 결과 차이를 본다.",
+            steps: [
+              { instruction: "먼저 막연한 프롬프트를 그대로 넣어 결과를 본다.", prompt: "굴삭기 점검 정리해줘", expected: "두루뭉술한 답" },
+              { instruction: "아래처럼 5요소를 갖춰 다시 넣는다.", prompt: "[역할] 너는 건설기계 기술문서 작성자야.\n[맥락] 30톤 굴삭기 일상점검 대상.\n[과제] 점검 항목을 정리해줘.\n[제약] 안전문구 유지, 추측 금지.\n[출력형식] 점검부위/방법/주기 표.", expected: "바로 쓰는 점검 표" },
+              { instruction: "두 결과를 비교해 무엇이 달라졌는지 한 줄로 적는다.", expected: "5요소의 효과 체감" },
+            ],
+            deliverable: "개선 전/후 프롬프트와 결과 비교",
+          },
         ],
       },
       {
@@ -61,6 +72,16 @@ export const labsByVol = {
             ],
             deliverable: '부서가 공유해 쓰는 견적 Custom GPT',
           },
+          {
+            code: "실습 2-4", level: "입문", tool: "ChatGPT (Vision)",
+            title: "도면·점검표 사진에서 정보 자동 추출",
+            goal: "사진을 올려 부품 정보·점검 결과를 표로 디지털화한다.",
+            steps: [
+              { instruction: "도면 또는 손글씨 점검표 사진을 업로드한다.", expected: "이미지 인식" },
+              { instruction: "표로 추출을 요청한다.", prompt: "이 이미지의 핵심 정보를 표로 정리해줘. 불확실한 글자는 [?]로 표시해줘.", expected: "추출 표" },
+            ],
+            deliverable: "사진→디지털 표",
+          },
         ],
       },
       {
@@ -95,6 +116,17 @@ export const labsByVol = {
             ],
             deliverable: '근거 인용 Q&A + 오디오 요약',
           },
+          {
+            code: "실습 3-C", level: "실전", tool: "Gemini (Deep Research)",
+            title: "출처 인용 시장 보고서 만들기",
+            goal: "진출 후보 시장을 출처가 달린 보고서로 자동 조사한다.",
+            steps: [
+              { instruction: "Deep Research를 선택한다.", expected: "심층 조사 모드" },
+              { instruction: "조사 범위를 구체적으로 요청한다.", prompt: "동남아 미니 굴삭기 시장(규모·성장률·경쟁사·수입 규제·유통)을 출처와 함께 조사하고 진출 리스크를 요약해줘.", expected: "출처 포함 보고서" },
+              { instruction: "핵심 수치의 각주를 클릭해 검수한다.", expected: "검증된 보고서" },
+            ],
+            deliverable: "출처 포함 시장 조사 보고서",
+          },
         ],
       },
       {
@@ -113,6 +145,16 @@ export const labsByVol = {
               { instruction: '완성된 슬라이드의 핵심 수치를 출처로 검수한다.', expected: '검수 완료된 검토 자료' },
             ],
             deliverable: '출처 포함 시장 검토 슬라이드 8장',
+          },
+          {
+            code: "실습 4-5", level: "실전", tool: "Genspark (Sparkpages·AI Slides)",
+            title: "리서치 페이지 + 발표자료 한 번에 만들기",
+            goal: "Sparkpage로 조사한 내용을 발표 슬라이드로 이어서 제작한다.",
+            steps: [
+              { instruction: "Sparkpages에 주제를 입력한다.", prompt: "\"2026 건설기계 AI 도입 동향\"을 출처 포함 리서치 페이지로 만들어줘.", expected: "출처 포함 리서치 페이지" },
+              { instruction: "그 내용으로 슬라이드를 요청한다.", prompt: "위 리서치를 발표 슬라이드 8장으로 만들어줘. 동향→사례→시사점→권고 흐름으로.", expected: "발표 덱" },
+            ],
+            deliverable: "리서치 페이지 + 발표 슬라이드",
           },
         ],
       },
@@ -148,6 +190,16 @@ export const labsByVol = {
             ],
             deliverable: '영상 기반 단계별 정비 매뉴얼',
           },
+          {
+            code: "실습 5-10", level: "심화", tool: "Gemini·ChatGPT",
+            title: "멀티모달 통합 워크플로우 직접 실행",
+            goal: "인터뷰 음성 + 시연 영상 + 노트를 한 흐름으로 묶어 산출물을 만든다.",
+            steps: [
+              { instruction: "자기 직무 자료를 모은다(녹음/영상/사진/노트 중 2~3개).", expected: "멀티모달 입력 준비" },
+              { instruction: "통합 정리를 요청한다.", prompt: "아래 자료들을 종합해줘.\n① 음성: 인터뷰 요약\n② 영상: 단계별 절차\n③ 노트: 핵심 포인트\n최종으로 “한 페이지 작업 매뉴얼”로 통합해줘.", expected: "통합 매뉴얼" },
+            ],
+            deliverable: "멀티모달 통합 한 페이지 매뉴얼",
+          },
         ],
       },
       {
@@ -168,6 +220,16 @@ export const labsByVol = {
                 expected: '발표 개요 5장' },
             ],
             deliverable: '내 직무 자동화 프로토타입 + 5분 시연 발표안',
+          },
+          {
+            code: "실습 6-2", level: "심화", tool: "문서 도구",
+            title: "사내 확산 90일 로드맵 만들기",
+            goal: "프로토타입을 조직에 확산하는 90일 계획을 세운다.",
+            steps: [
+              { instruction: "확산 대상(부서·인원)을 정한다.", expected: "대상 확정" },
+              { instruction: "로드맵을 요청한다.", prompt: "내 직무 AI 자동화를 사내에 확산하는 90일 로드맵을 만들어줘. PoC→부서→부서간→전사 4단계로, 각 단계 목표·활동·KPI를 표로.", expected: "90일 확산 로드맵" },
+            ],
+            deliverable: "사내 확산 90일 로드맵",
           },
         ],
       },
@@ -196,6 +258,16 @@ export const labsByVol = {
                 expected: '우선 디지털화 대상 3선' },
             ],
             deliverable: '데이터 자산 인벤토리 + 우선순위',
+          },
+          {
+            code: "실습 1-2", level: "실전", tool: "ChatGPT·Claude",
+            title: "데이터 자산 4분면 진단 매트릭스",
+            goal: "보유 데이터를 가치·디지털화 수준 4분면으로 진단한다.",
+            steps: [
+              { instruction: "인벤토리에서 자료 5~10개를 고른다.", expected: "진단 대상" },
+              { instruction: "4분면 진단을 요청한다.", prompt: "아래 데이터 자료들을 “가치(높음/낮음) × 디지털화 수준(높음/낮음)” 4분면으로 분류해줘. 각 분면별 권고 행동도 적어줘.\n[자료 목록 붙여넣기]", expected: "4분면 진단 + 권고" },
+            ],
+            deliverable: "데이터 자산 4분면 진단",
           },
         ],
       },
@@ -233,6 +305,16 @@ export const labsByVol = {
             ],
             deliverable: '베테랑 인터뷰 질문지 + 정리 체크리스트',
           },
+          {
+            code: "실습 2-4", level: "실전", tool: "ChatGPT·Notion",
+            title: "1주일 현장 데이터 수집 시스템 설계",
+            goal: "부서의 7일 수집 루틴(대상·도구·담당·보안)을 설계한다.",
+            steps: [
+              { instruction: "수집할 데이터 종류를 떠올린다.", expected: "수집 항목 파악" },
+              { instruction: "시스템 설계를 요청한다.", prompt: "내 부서 [부서명]의 1주일 현장 데이터 수집 시스템을 설계해줘. 요일별 수집 대상(사진·음성·문서)·도구·담당·보안등급을 표로, 24시간 정리 룰을 반영해줘.", expected: "7일 수집 시스템 표" },
+            ],
+            deliverable: "1주일 데이터 수집 시스템 설계서",
+          },
         ],
       },
       {
@@ -265,6 +347,17 @@ export const labsByVol = {
                 expected: '구조화된 회의록' },
             ],
             deliverable: '구조화 회의록 데이터',
+          },
+          {
+            code: "실습 3-3", level: "실전", tool: "ChatGPT(Vision)·OCR",
+            title: "베테랑 손글씨 노트 OCR + 다국어 처리",
+            goal: "손글씨 노트를 디지털 텍스트로 바꾸고 필요 시 번역한다.",
+            steps: [
+              { instruction: "손글씨 노트 사진을 업로드한다.", expected: "이미지 인식" },
+              { instruction: "텍스트화 + 정리를 요청한다.", prompt: "이 손글씨 노트를 텍스트로 옮기고 항목별로 정리해줘. 판독 불확실한 부분은 [?]로 표시해줘.", expected: "정리된 텍스트" },
+              { instruction: "필요하면 번역한다.", prompt: "위 내용을 영어로도 번역해줘. 전문용어는 표준 표기로.", expected: "다국어 노하우 데이터" },
+            ],
+            deliverable: "손글씨 노트 디지털화(+번역)",
           },
         ],
       },
@@ -299,6 +392,16 @@ export const labsByVol = {
             ],
             deliverable: '부서 분류 체계 문서',
           },
+          {
+            code: "실습 4-3", level: "심화", tool: "ChatGPT·Claude",
+            title: "데이터 거버넌스 문서(5계층) 작성",
+            goal: "수집~활용 전 과정의 규칙을 5계층 거버넌스로 정리한다.",
+            steps: [
+              { instruction: "우리 부서 데이터 흐름을 떠올린다.", expected: "대상 파악" },
+              { instruction: "거버넌스 문서를 요청한다.", prompt: "데이터 거버넌스 문서를 5계층(수집·저장·분류·품질·활용/보안)으로 만들어줘. 각 계층의 원칙·담당·점검 항목을 표로 정리해줘.", expected: "5계층 거버넌스 문서" },
+            ],
+            deliverable: "데이터 거버넌스 문서(5계층)",
+          },
         ],
       },
       {
@@ -320,6 +423,16 @@ export const labsByVol = {
             ],
             deliverable: '데이터 품질 체크리스트 + 개선 우선순위',
           },
+          {
+            code: "실습 5-2", level: "실전", tool: "ChatGPT(Code Interpreter)",
+            title: "데이터 클린징 5단계 적용",
+            goal: "결측·중복·이상치를 단계적으로 정제한다.",
+            steps: [
+              { instruction: "정제할 데이터 파일을 업로드한다.", expected: "데이터 인식" },
+              { instruction: "클린징을 요청한다.", prompt: "이 데이터를 정제해줘. ① 결측치 처리 ② 중복 제거 ③ 이상치 탐지 ④ 표기 통일 ⑤ 정제 전후 비교 요약을 표로 보여줘.", expected: "정제 결과 + 전후 비교" },
+            ],
+            deliverable: "정제된 데이터 + 클린징 리포트",
+          },
         ],
       },
       {
@@ -340,6 +453,16 @@ export const labsByVol = {
                 expected: 'ROI + 90일 로드맵' },
             ],
             deliverable: '데이터 자산화 5단계 설계 + 90일 로드맵',
+          },
+          {
+            code: "실습 6-2", level: "심화", tool: "문서 도구",
+            title: "임원 보고용 ROI 발표안",
+            goal: "데이터 자산화 효과를 경영진 보고용으로 정량화한다.",
+            steps: [
+              { instruction: "투입(시간·비용)과 효과(절감·품질)를 메모한다.", expected: "근거 메모" },
+              { instruction: "ROI 발표안을 요청한다.", prompt: "데이터 자산화 프로젝트의 ROI를 임원 보고용으로 정리해줘. 투입 대비 효과를 정량화하고, 핵심 KPI와 의사결정 요청 사항을 5장 발표 개요로.", expected: "ROI 발표 개요" },
+            ],
+            deliverable: "임원 보고용 ROI 발표안",
           },
         ],
       },
