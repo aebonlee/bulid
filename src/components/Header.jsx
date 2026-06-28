@@ -68,8 +68,8 @@ export default function Header({ onToggleSidebar }) {
           </div>
         </Link>
 
-        {/* 데스크톱 네비 */}
-        <nav className="ml-3 hidden items-center gap-0.5 lg:flex">
+        {/* 데스크톱 네비 (오른쪽 정렬) */}
+        <nav className="ml-auto hidden items-center gap-0.5 lg:flex">
           {NAV.map((item) => (
             <NavTab key={item.to} to={item.to} active={isActive(loc.pathname, item.to)}>
               {item.label}
@@ -77,7 +77,7 @@ export default function Header({ onToggleSidebar }) {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2 lg:ml-3">
           {user ? (
             <div className="flex items-center gap-2.5">
               <span className="hidden text-[13px] text-slate-600 sm:inline">

@@ -86,6 +86,7 @@ export default function ToolPage() {
         {section === 'overview' && <OverviewPage tool={tool} />}
         {section === 'features' && <FeaturesPage tool={tool} />}
         {section === 'practice' && <PracticePage tool={tool} />}
+        {section === 'cases' && <CasesPage tool={tool} />}
         {section === 'prompts' && <PromptsPage tool={tool} />}
 
         {/* 하위 페이지 이동 */}
@@ -265,6 +266,65 @@ function PracticePage({ tool }) {
         </Card>
       )}
     </>
+  )
+}
+
+/* ---------------- 사례집 ---------------- */
+function CasesPage({ tool }) {
+  if (!tool.cases?.length) {
+    return (
+      <Card title="사례집" icon="fa-solid fa-folder-open">
+        <p className="text-[14px] text-slate-500">준비 중입니다.</p>
+      </Card>
+    )
+  }
+  return (
+    <Card title={`${tool.name} 도입 사례집`} icon="fa-solid fa-folder-open">
+      <p className="-mt-2 mb-4 text-[13px] text-slate-500">
+        건설기계 현장·직무에서 {tool.name}를 활용한 사례입니다. 문제 → 해결 → 성과 흐름으로 정리했습니다.
+      </p>
+      <div className="space-y-4">
+        {tool.cases.map((c, i) => (
+          <div key={i} className="overflow-hidden rounded-xl border border-slate-200">
+            <div className="flex items-center gap-2.5 bg-brand-50 px-4 py-3">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand-800 text-[12px] font-bold text-white">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 className="flex-1 text-[14.5px] font-extrabold text-brand-900">{c.title}</h3>
+              {c.sector && (
+                <span className="shrink-0 rounded-md bg-white px-2 py-0.5 text-[11px] font-bold text-brand-700 ring-1 ring-brand-200">
+                  {c.sector}
+                </span>
+              )}
+            </div>
+            <div className="space-y-2.5 p-4">
+              <CaseRow icon="fa-solid fa-circle-question" tone="rose" label="문제" text={c.problem} />
+              <CaseRow icon="fa-solid fa-lightbulb" tone="sky" label="해결" text={c.solution} />
+              <CaseRow icon="fa-solid fa-arrow-trend-up" tone="emerald" label="성과" text={c.result} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 rounded-lg bg-slate-100 px-3 py-2.5 text-[11.5px] leading-relaxed text-slate-500">
+        ※ 사례의 효과(절감률 등)는 일반적 참고치이며, 실제 결과는 데이터·운영 환경에 따라 달라집니다.
+      </p>
+    </Card>
+  )
+}
+
+function CaseRow({ icon, tone, label, text }) {
+  const tones = {
+    rose: 'bg-rose-50 text-rose-600',
+    sky: 'bg-sky-50 text-sky-600',
+    emerald: 'bg-emerald-50 text-emerald-600',
+  }
+  return (
+    <div className="flex gap-2.5">
+      <span className={`flex h-6 shrink-0 items-center gap-1 rounded-md px-2 text-[11px] font-bold ${tones[tone]}`}>
+        <Icon name={icon} /> {label}
+      </span>
+      <span className="flex-1 text-[13.5px] leading-relaxed text-slate-700">{text}</span>
+    </div>
   )
 }
 
