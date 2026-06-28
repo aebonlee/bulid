@@ -361,32 +361,38 @@ function ScheduleNav({ onClose }) {
 
 /* ---------------- 부록 ---------------- */
 function AppendixNav({ onClose }) {
-  const go = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    onClose?.()
-  }
+  const loc = useLocation()
   return (
     <>
-      <SectionLabel>부록 · 업무별 프롬프트</SectionLabel>
-      <nav className="mt-1.5 space-y-0.5">
-        {appendix.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => go(cat.id)}
-            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left transition hover:bg-slate-50"
-          >
-            <span className="w-5 text-center text-brand-600"><Icon name={cat.icon} /></span>
-            <span className="text-[13px] font-medium text-slate-600">{cat.category}</span>
-          </button>
-        ))}
-      </nav>
       <Link
-        to="/tools/prompt/learn"
+        to="/appendix"
         onClick={onClose}
-        className="mt-4 block rounded-lg px-3 py-2 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50"
+        className={`mb-2 block rounded-lg px-3 py-2 text-[13px] font-semibold transition ${
+          loc.pathname === '/appendix' ? 'bg-brand-50 text-brand-800 ring-1 ring-brand-200' : 'text-brand-700 hover:bg-brand-50'
+        }`}
       >
-        <Icon name="fa-solid fa-pen-nib" /> 프롬프트학습 바로가기
+        <Icon name="fa-solid fa-book-bookmark" /> 부록 홈
       </Link>
+
+      <SectionLabel>업무별 프롬프트</SectionLabel>
+      <nav className="mt-1.5 space-y-0.5">
+        {appendix.map((cat) => {
+          const active = loc.pathname === `/appendix/${cat.id}`
+          return (
+            <Link
+              key={cat.id}
+              to={`/appendix/${cat.id}`}
+              onClick={onClose}
+              className={`flex items-center gap-2.5 rounded-lg px-3 py-2 transition ${
+                active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
+              }`}
+            >
+              <span className="w-5 text-center text-brand-600"><Icon name={cat.icon} /></span>
+              <span className={`text-[13px] ${active ? 'font-bold text-brand-900' : 'font-medium text-slate-600'}`}>{cat.category}</span>
+            </Link>
+          )
+        })}
+      </nav>
     </>
   )
 }

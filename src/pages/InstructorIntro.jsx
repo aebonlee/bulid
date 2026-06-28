@@ -12,14 +12,14 @@ export default function InstructorIntro() {
   return (
     <Layout>
       <section className="bg-brand-900 text-white">
-        <div className="mx-auto max-w-4xl px-5 py-10">
+        <div className="mx-auto max-w-screen-xl px-5 py-10">
           <div className="text-[12px] font-bold uppercase tracking-wider text-signal-300">Instructor</div>
           <h1 className="mt-2 text-3xl font-extrabold">강사 소개</h1>
           <p className="mt-1.5 text-[14px] text-brand-100">기업·대학 AI 교육 전문 강사 프로필</p>
         </div>
       </section>
 
-      <div className="mx-auto max-w-4xl px-5 py-10">
+      <div className="mx-auto max-w-screen-xl px-5 py-10">
         {/* 프로필 카드 */}
         <div className="grid gap-7 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm sm:grid-cols-[200px_1fr]">
           <div className="flex flex-col items-center gap-3">

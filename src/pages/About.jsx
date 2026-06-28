@@ -14,7 +14,7 @@ export default function About() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div className="absolute -right-16 -top-20 h-72 w-72 rounded-full bg-signal-400/20 blur-3xl" />
-        <div className="relative mx-auto max-w-4xl px-5 py-12">
+        <div className="relative mx-auto max-w-screen-xl px-5 py-12">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-signal-300 ring-1 ring-white/15">
             <Icon name="fa-solid fa-circle-info" /> About · 제작 의도
           </div>
@@ -23,7 +23,7 @@ export default function About() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-4xl px-5 py-12">
+      <div className="mx-auto max-w-screen-xl px-5 py-12">
         <div className="space-y-3.5">
           {purpose.paragraphs.map((p, i) => (
             <p key={i} className="text-[15px] leading-[1.85] text-slate-700">{p}</p>

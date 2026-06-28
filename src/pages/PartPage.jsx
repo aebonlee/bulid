@@ -29,7 +29,7 @@ export default function PartPage() {
 
   return (
     <Layout>
-      <div className="mx-auto flex max-w-screen-xl gap-8 px-5 py-8">
+      <div className="mx-auto flex max-w-screen-2xl gap-8 px-5 py-8">
         <article className="min-w-0 flex-1">
           <div className="mb-4 flex items-center gap-1.5 text-[12.5px] text-slate-400">
             <Link to="/" className="hover:text-brand-700">홈</Link>

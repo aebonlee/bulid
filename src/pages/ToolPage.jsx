@@ -47,7 +47,7 @@ export default function ToolPage() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-4xl px-5 py-8">
+      <div className="mx-auto max-w-screen-xl px-5 py-8">
         <div className="mb-4 flex items-center gap-1.5 text-[12.5px] text-slate-400">
           <Link to="/" className="hover:text-brand-700">홈</Link>
           <span>/</span>

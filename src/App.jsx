@@ -12,6 +12,7 @@ import About from './pages/About'
 import InstructorIntro from './pages/InstructorIntro'
 import CompanyIntro from './pages/CompanyIntro'
 import Appendix from './pages/Appendix'
+import Dashboard from './pages/Dashboard'
 
 export default function App() {
   return (
@@ -31,6 +32,8 @@ export default function App() {
           <Route path="/about/instructor" element={<InstructorIntro />} />
           <Route path="/about/company" element={<CompanyIntro />} />
           <Route path="/appendix" element={<Appendix />} />
+          <Route path="/appendix/:catId" element={<Appendix />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ProgressProvider>

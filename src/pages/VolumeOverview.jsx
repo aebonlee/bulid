@@ -16,7 +16,7 @@ export default function VolumeOverview() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-4xl px-5 py-8">
+      <div className="mx-auto max-w-screen-xl px-5 py-8">
         {/* 헤더 */}
         <div className="rounded-2xl bg-brand-800 p-7 text-white">
           <div className="text-[12.5px] font-bold text-signal-300">{vol.label} · 교재 전체 목차</div>

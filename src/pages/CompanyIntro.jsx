@@ -12,14 +12,14 @@ export default function CompanyIntro() {
   return (
     <Layout>
       <section className="bg-brand-900 text-white">
-        <div className="mx-auto max-w-4xl px-5 py-10">
+        <div className="mx-auto max-w-screen-xl px-5 py-10">
           <div className="text-[12px] font-bold uppercase tracking-wider text-signal-300">DreamIT Biz</div>
           <h1 className="mt-2 text-3xl font-extrabold">회사 소개</h1>
           <p className="mt-1.5 text-[14px] text-brand-100">에듀테크 전문 기업 드림아이티비즈</p>
         </div>
       </section>
 
-      <div className="mx-auto max-w-4xl px-5 py-10">
+      <div className="mx-auto max-w-screen-xl px-5 py-10">
         {/* 소개 + 사업 정보 */}
         <div className="grid gap-6 lg:grid-cols-2">
           <div>

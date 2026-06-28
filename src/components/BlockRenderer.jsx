@@ -140,7 +140,7 @@ export default function BlockRenderer({ blocks }) {
         switch (b.type) {
           case 'para':
             return (
-              <p key={i} className="my-3.5 leading-[1.85] text-[15.5px] text-slate-700">
+              <p key={i} className="my-3.5 leading-[1.9] text-[16.5px] text-slate-700">
                 {b.text}
               </p>
             )
@@ -189,7 +189,7 @@ export default function BlockRenderer({ blocks }) {
             return (
               <ul key={i} className="my-3.5 space-y-1.5">
                 {b.items.map((it, ii) => (
-                  <li key={ii} className="flex gap-2.5 text-[15px] leading-relaxed text-slate-700">
+                  <li key={ii} className="flex gap-2.5 text-[16px] leading-relaxed text-slate-700">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-signal-400" />
                     <span>{it}</span>
                   </li>

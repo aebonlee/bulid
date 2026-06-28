@@ -19,6 +19,7 @@ const NAV = [
   { to: '/tools/perplexity', label: 'Perplexity' },
   { divider: true },
   { to: '/appendix', label: '부록' },
+  { to: '/dashboard', label: '내 학습' },
 ]
 
 function isActive(pathname, to) {
