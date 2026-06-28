@@ -62,12 +62,18 @@ export default function Dashboard() {
             const vDone = countDone(v.id, days.map((d) => d.num))
             return (
               <section key={v.id}>
-                <div className="mb-3 flex items-center justify-between">
-                  <h2 className="flex items-center gap-2 text-lg font-bold text-brand-900">
-                    <Icon name="fa-solid fa-book" className="text-brand-600" />
-                    {v.label}
-                  </h2>
-                  <span className="text-[13px] font-semibold text-slate-500">{vDone}/{days.length} 완료</span>
+                <div className="mb-3 flex items-end justify-between gap-3">
+                  <div className="flex items-start gap-2">
+                    <Icon name="fa-solid fa-book" className="mt-1 text-brand-600" />
+                    <div className="leading-tight">
+                      <h2 className="text-[16px] font-extrabold text-brand-900">{v.title}</h2>
+                      <div className="mt-0.5 text-[12px] font-semibold text-slate-400">
+                        {v.label}
+                        {v.subtitle ? ` · ${v.subtitle}` : ''}
+                      </div>
+                    </div>
+                  </div>
+                  <span className="shrink-0 text-[13px] font-semibold text-slate-500">{vDone}/{days.length} 완료</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
