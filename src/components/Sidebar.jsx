@@ -1,6 +1,7 @@
 import { Link, useParams, useLocation } from 'react-router-dom'
 import { getVolume, volumes } from '../data/courses'
 import { toolMenu, getTool, TOOL_SECTIONS } from '../data/tools'
+import { ABOUT_PAGES } from '../data/about'
 import { useProgress } from '../context/ProgressContext'
 
 export default function Sidebar({ open, onClose }) {
@@ -225,31 +226,30 @@ function ToolsNav({ onClose }) {
 }
 
 /* ---------------- About ---------------- */
-const ABOUT_SECTIONS = [
-  { id: 'purpose', label: '제작 의도', emoji: '🎯' },
-  { id: 'instructor', label: '강사 소개', emoji: '👨‍🏫' },
-  { id: 'company', label: '회사 소개', emoji: '🏢' },
-]
-
 function AboutNav({ onClose }) {
-  const go = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    onClose?.()
-  }
+  const loc = useLocation()
   return (
     <>
       <SectionLabel>About</SectionLabel>
       <nav className="mt-1.5 space-y-0.5">
-        {ABOUT_SECTIONS.map((s) => (
-          <button
-            key={s.id}
-            onClick={() => go(s.id)}
-            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left transition hover:bg-slate-50"
-          >
-            <span className="text-lg">{s.emoji}</span>
-            <span className="text-[13.5px] font-medium text-slate-600">{s.label}</span>
-          </button>
-        ))}
+        {ABOUT_PAGES.map((s) => {
+          const active = loc.pathname === s.to
+          return (
+            <Link
+              key={s.id}
+              to={s.to}
+              onClick={onClose}
+              className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 transition ${
+                active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
+              }`}
+            >
+              <span className="text-lg">{s.emoji}</span>
+              <span className={`text-[13.5px] ${active ? 'font-bold text-brand-900' : 'font-medium text-slate-600'}`}>
+                {s.label}
+              </span>
+            </Link>
+          )
+        })}
       </nav>
       <Link
         to="/"

@@ -8,6 +8,8 @@ import ToolsHome from './pages/ToolsHome'
 import ToolPage from './pages/ToolPage'
 import PromptLab from './pages/PromptLab'
 import About from './pages/About'
+import InstructorIntro from './pages/InstructorIntro'
+import CompanyIntro from './pages/CompanyIntro'
 
 export default function App() {
   return (
@@ -21,6 +23,8 @@ export default function App() {
           <Route path="/tools/prompt" element={<PromptLab />} />
           <Route path="/tools/:toolId" element={<ToolPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/about/instructor" element={<InstructorIntro />} />
+          <Route path="/about/company" element={<CompanyIntro />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ProgressProvider>

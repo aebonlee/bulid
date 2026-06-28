@@ -1,5 +1,11 @@
-// About 페이지 콘텐츠 (제작의도 · 강사소개 · 회사소개)
-// 강사·회사 세부 정보는 필요에 맞게 자유롭게 수정하세요.
+// About 콘텐츠 (제작의도 · 강사소개 · 회사소개)
+// 강사·회사 정보는 DreamIT Biz 실제 정보 기준. 필요 시 수정하세요.
+
+export const ABOUT_PAGES = [
+  { id: 'purpose', to: '/about', label: '제작 의도', emoji: '🎯' },
+  { id: 'instructor', to: '/about/instructor', label: '강사 소개', emoji: '👨‍🏫' },
+  { id: 'company', to: '/about/company', label: '회사 소개', emoji: '🏢' },
+]
 
 export const purpose = {
   title: '제작 의도',
@@ -11,38 +17,74 @@ export const purpose = {
   ],
   points: [
     { icon: '📚', title: '교재 전문 제공', desc: '제1·2권 6일 과정을 그대로 — 표·그림·실습·사례까지.' },
-    { icon: '✍️', title: '프롬프트 & 도구 가이드', desc: 'ChatGPT·Claude·Gemini·Genspark·Perplexity와 프롬프트 작성법 정리.' },
+    { icon: '✍️', title: '프롬프트 & 도구 가이드', desc: 'ChatGPT·Claude·Gemini·Genspark·Perplexity와 프롬프트 작성법·실습 사례 정리.' },
     { icon: '🏗️', title: '현장 직무 중심', desc: '건설기계 6직무 실무 자동화에 초점을 맞춘 활용 사례.' },
     { icon: '📈', title: '학습 진도 관리', desc: '로그인하면 어디서나 진도가 동기화되어 끝까지 완주.' },
   ],
 }
 
 export const instructor = {
-  title: '강사 소개',
-  name: 'DreamIT Biz 대표 강사',
-  role: 'AI 활용·업무 자동화 교육 전문',
-  photoEmoji: '👨‍🏫',
+  name: '이애본 (Ph.D)',
+  role: 'DreamIT Biz 대표 · 기업·대학 AI 교육 전문',
+  photo: `${import.meta.env.BASE_URL}aebon.jpeg`,
   intro:
-    '생성형 AI를 실무에 접목하는 업무 자동화·데이터 활용 교육을 전문으로 합니다. 기업·공공기관·대학을 대상으로 ChatGPT·Claude·Gemini 등 주요 AI 도구의 현업 적용과 AX(AI Transformation) 전환을 강의·컨설팅해 왔습니다.',
-  expertise: [
-    '생성형 AI 업무 자동화 (프롬프트·Custom GPT·Agent)',
-    '현장 데이터 수집·디지털화 및 데이터 자산화',
-    '산업·직무별 AI 적용 전략과 프로토타입 구축',
-    'AI 학습 플랫폼 기획·개발',
+    '생성형 AI를 실무에 접목하는 업무 자동화·데이터 활용 교육을 전문으로 합니다. 다수의 교육 사이트를 직접 설계·개발·운영하며, 대학교(경기대·한신대·한국기술교육대·서울대·한국외대·한라대·조선대 등)와 기업(KDN·KOMIPO 등)에서 AI 활용 교육을 진행하고 있습니다.',
+  keyInfo: [
+    ['직위', '드림아이티비즈 대표'],
+    ['학위', '정보관리박사 (Ph.D)'],
+    ['전공', '컴퓨터 / 직업학 / 정보관리'],
+    ['교육 대상', '대학·기업·공공기관'],
   ],
-  note: '※ 강사 약력·연락처 등 세부 정보는 운영 정책에 맞게 수정하여 사용하세요.',
+  expertise: [
+    { area: '생성형 AI 교육', detail: 'ChatGPT·Gemini·Claude·Genspark 등 AI 도구 활용 교육', emoji: '🤖' },
+    { area: '프롬프트 엔지니어링', detail: '5요소·SCORE 프레임워크, Few-shot 등 고급 기법', emoji: '✨' },
+    { area: '에듀테크 플랫폼', detail: 'React + Supabase 기반 교육 사이트 설계·개발·운영', emoji: '💻' },
+    { area: 'IT/디지털 전환', detail: '기업 DX 컨설팅, 웹 시스템 구축, 데이터 분석', emoji: '📈' },
+    { area: '대학 교육', detail: 'AI·SW개론, 컴퓨팅 사고 등 대학 교과목 강의', emoji: '🎓' },
+    { area: '출판/콘텐츠', detail: 'AI·IT·경영 분야 전문 도서 기획·출판', emoji: '📘' },
+  ],
+  career: [
+    { period: '현재', role: '드림아이티비즈(DreamIT Biz) 대표', detail: '에듀테크 전문 기업 경영, 다수 교육 사이트 운영' },
+    { period: '현재', role: '한신대학교 AI·SW대학 겸임교수', detail: 'AI·SW개론, 공학설계입문, 자바·웹프로그래밍 담당' },
+    { period: '현재', role: '한국기술교육대학교 외래교수', detail: '“컴퓨팅 사고” 교과목 담당' },
+    { period: '2018~2023', role: '경기대학교 겸임교수', detail: '소프트웨어 기초 및 파이썬 프로그래밍 담당' },
+    { period: '2001~', role: '기업 AI 교육 전문 강사', detail: '고용노동부 직업능력개발훈련교사 — 인공지능·프로그래밍·UI/UX 외 다수' },
+  ],
+  philosophy: {
+    quote: 'AI는 도구이고, 진짜 혁신은 사람이 만듭니다.',
+    body: '도구 사용법을 넘어, 현장의 문제를 스스로 정의하고 AI로 해결하는 역량을 길러주는 것을 목표로 합니다.',
+  },
 }
 
 export const company = {
-  title: '회사 소개',
-  name: 'DreamIT Biz (드림아이티비즈)',
-  tagline: 'AI 교육과 솔루션으로, 현장의 일하는 방식을 바꿉니다.',
+  name: '드림아이티비즈 (DreamIT Biz)',
+  tagline: '교육의 미래를 기술로 설계합니다',
   intro:
-    '드림아이티비즈는 생성형 AI 교육과 맞춤형 학습 플랫폼·솔루션 개발을 전문으로 하는 기업입니다. 산업·기관별 요구에 맞춘 AI 역량강화 과정을 설계하고, 학습을 지속시키는 온라인 플랫폼까지 함께 제공합니다.',
-  services: [
-    { icon: '🎓', title: 'AI 역량강화 교육', desc: '기업·공공·대학 맞춤형 생성형 AI 실무 교육과정 설계·운영.' },
-    { icon: '🛠️', title: '학습 플랫폼 개발', desc: '교재 기반 온라인 학습사이트·LMS 구축 (React·Supabase 등).' },
-    { icon: '🤝', title: 'AI 도입 컨설팅', desc: '직무별 AI 적용 전략·프로토타입·데이터 자산화 컨설팅.' },
+    '드림아이티비즈(DreamIT Biz)는 대학교·기업·공공기관을 대상으로 맞춤형 교육 플랫폼을 설계·개발·운영하는 에듀테크 전문 기업입니다. AI 교육, 경영, 코딩, 자격증, 인문교양 등 다양한 분야의 교육 사이트를 *.dreamitbiz.com 도메인 하에 운영하며, 각 교육 대상에 맞춘 최적의 학습 경험을 제공합니다.',
+  info: [
+    ['대표', '이애본 (Ph.D)'],
+    ['사업자', '601-45-20154'],
+    ['통신판매', '제2024-수원팔달-0584호'],
+    ['출판사', '제2026-000026호'],
+    ['소재지', '경기도 수원시 팔달구 매산로 45, 419호'],
+    ['이메일', 'aebon@dreamitbiz.com'],
+    ['도메인', 'www.dreamitbiz.com'],
+  ],
+  platforms: [
+    { emoji: '🤖', title: 'AI / 인공지능', desc: 'ChatGPT·Gemini·Claude·Genspark, 프롬프트 엔지니어링, AI 리터러시 등' },
+    { emoji: '💼', title: '경영 전공', desc: 'HRM·마케팅·회계·기획·디지털비즈니스·UX디자인 등' },
+    { emoji: '💻', title: '코딩 / 프로그래밍', desc: 'HTML·React·C·Java·Python·알고리즘·데이터베이스 등' },
+    { emoji: '🎓', title: '대학 교과목', desc: 'AI·SW개론(한신대), 컴퓨팅 사고(한국기술교육대) 등 정규 교과목' },
+    { emoji: '🏅', title: '자격증 / 취업', desc: '정보처리기사·리눅스·SQLD·AWS·취업 지원 등' },
+    { emoji: '📖', title: '교양 / 인문', desc: '통계·외국어·프레젠테이션·안전·ESG 등 교양 교육' },
+  ],
+  techStack: [
+    { name: 'React 18/19', desc: '최신 React로 사이트 구축' },
+    { name: 'Vite', desc: '초고속 빌드 도구' },
+    { name: 'Tailwind CSS', desc: '일관된 디자인 시스템' },
+    { name: 'Supabase', desc: '클라우드 백엔드·인증' },
+    { name: 'GitHub Pages', desc: '자동 배포 플랫폼' },
+    { name: 'OpenAI / Claude', desc: 'AI 기능 연동' },
   ],
   links: [
     { label: '대표 도메인', value: 'dreamitbiz.com', url: 'https://dreamitbiz.com' },
