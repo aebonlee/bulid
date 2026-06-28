@@ -14,10 +14,11 @@ const FLOATERS = [
   { id: 'perplexity', cls: 'right-[6%] top-[64%] h-14 w-14 text-xl', dur: '7.5s', delay: '1.4s', accent: 'text-rose-300' },
 ]
 
-// 배경용 큰 SVG 글자 워터마크 ("AI" / "AX")
+// 배경용 큰 SVG 글자 워터마크 ("AI" / "AX" / "Bulid" 등) — 글자 수에 맞춰 폭 자동 조정
 function AiMark({ id, text = 'AI', from = '#fbbf24', to = '#7ea4d6', className = '' }) {
+  const w = Math.max(360, text.length * 118)
   return (
-    <svg viewBox="0 0 360 180" className={className} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <svg viewBox={`0 0 ${w} 180`} className={className} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <defs>
         <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor={from} />
@@ -25,12 +26,12 @@ function AiMark({ id, text = 'AI', from = '#fbbf24', to = '#7ea4d6', className =
         </linearGradient>
       </defs>
       <text
-        x="180"
+        x={w / 2}
         y="138"
         textAnchor="middle"
-        fontSize="180"
+        fontSize="150"
         fontWeight="900"
-        letterSpacing="6"
+        letterSpacing="4"
         fontFamily="Pretendard, system-ui, sans-serif"
         fill={`url(#${id})`}
         stroke="rgba(255,255,255,0.3)"
@@ -59,11 +60,18 @@ export default function Home() {
           <AiMark id="aimark-desktop" text="AI" className="floaty h-[52%] w-full opacity-[0.14]" />
         </div>
         <div
-          className="floaty pointer-events-none absolute right-[30%] top-[10%] hidden w-[22%] lg:block"
+          className="floaty pointer-events-none absolute right-[30%] top-[8%] hidden w-[20%] lg:block"
           style={{ animationDuration: '8s', animationDelay: '1.2s' }}
           aria-hidden="true"
         >
-          <AiMark id="axmark-desktop" text="AX" from="#fcd34d" to="#4e7fc1" className="h-auto w-full opacity-[0.11]" />
+          <AiMark id="axmark-desktop" text="AX" from="#fcd34d" to="#4e7fc1" className="h-auto w-full opacity-[0.12]" />
+        </div>
+        <div
+          className="floaty pointer-events-none absolute right-[22%] top-[62%] hidden w-[30%] lg:block"
+          style={{ animationDuration: '9s', animationDelay: '.8s' }}
+          aria-hidden="true"
+        >
+          <AiMark id="bulidmark-desktop" text="Bulid" from="#aec7e7" to="#fbbf24" className="h-auto w-full opacity-[0.10]" />
         </div>
 
         {/* 떠다니는 AI 툴 로고 (lg 이상) */}
@@ -125,8 +133,9 @@ export default function Home() {
           {/* 모바일 전용 AI 툴 로고 행 (배경 "AI" 워터마크 위) */}
           <div className="relative mt-9 lg:hidden">
             <div className="pointer-events-none absolute inset-0 flex items-center justify-between" aria-hidden="true">
-              <AiMark id="aimark-mobile" text="AI" className="h-24 w-auto opacity-[0.13]" />
-              <AiMark id="axmark-mobile" text="AX" from="#fcd34d" to="#4e7fc1" className="h-24 w-auto opacity-[0.11]" />
+              <AiMark id="aimark-mobile" text="AI" className="h-20 w-auto opacity-[0.13]" />
+              <AiMark id="bulidmark-mobile" text="Bulid" from="#aec7e7" to="#fbbf24" className="h-12 w-auto opacity-[0.10]" />
+              <AiMark id="axmark-mobile" text="AX" from="#fcd34d" to="#4e7fc1" className="h-20 w-auto opacity-[0.11]" />
             </div>
             <div className="relative flex flex-wrap gap-3">
               {FLOATERS.map((f, i) => {
