@@ -7,8 +7,8 @@ import Icon from './Icon'
 // 전역 네비게이션 — About 최우선, 4대 AI 도구는 개별 메뉴
 const NAV = [
   { to: '/about', label: 'About' },
-  { to: '/vol/vol1', label: '제1권 교재' },
-  { to: '/vol/vol2', label: '제2권 교재' },
+  { to: '/vol/vol1', label: '업무자동화과정' },
+  { to: '/vol/vol2', label: '현장데이터활용과정' },
   { to: '/schedule/vol1', label: '교육일정' },
   { to: '/tools/prompt/learn', label: '프롬프트학습' },
   { divider: true },
