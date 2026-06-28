@@ -75,11 +75,29 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-10 flex flex-wrap gap-6 text-center">
+          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-4 text-center">
             <Stat n="2권" l="교재" />
             <Stat n="12일" l="총 과정 (6일×2)" />
             <Stat n="6직무" l="직무별 프로토타입" />
             <Stat n="4대" l="생성형 AI 도구" />
+          </div>
+
+          {/* 모바일 전용 AI 툴 로고 행 */}
+          <div className="mt-9 flex flex-wrap gap-3 lg:hidden">
+            {FLOATERS.map((f, i) => {
+              const tool = tools.find((t) => t.id === f.id)
+              if (!tool) return null
+              return (
+                <div
+                  key={f.id}
+                  className={`floaty flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-lg ring-1 ring-white/20 ${f.accent}`}
+                  style={{ animationDuration: f.dur, animationDelay: `${i * 0.25}s` }}
+                  title={tool.name}
+                >
+                  <Icon name={tool.icon} />
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
