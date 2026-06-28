@@ -2,6 +2,7 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Layout from '../components/Layout'
 import { getTool } from '../data/tools'
+import Icon from '../components/Icon'
 
 const HERO = {
   signal: 'from-signal-400 to-signal-500 text-brand-950',
@@ -16,7 +17,7 @@ function Card({ title, icon, children, id }) {
   return (
     <section id={id} className="mb-6 scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <h2 className="mb-4 flex items-center gap-2 text-[17px] font-extrabold text-brand-900">
-        <span>{icon}</span>
+        <Icon name={icon} className="text-brand-600" />
         {title}
       </h2>
       {children}
@@ -56,7 +57,7 @@ export default function ToolPage() {
         {/* Hero */}
         <div className={`mb-7 rounded-2xl bg-gradient-to-br p-7 shadow-sm ${HERO[tool.color]}`}>
           <div className="flex items-center gap-4">
-            <span className="text-5xl">{tool.emoji}</span>
+            <span className="text-4xl"><Icon name={tool.icon} /></span>
             <div>
               <h1 className="text-[28px] font-extrabold leading-none">{tool.name}</h1>
               {tool.vendor && <div className="mt-1.5 text-[13px] font-medium opacity-85">{tool.vendor}</div>}
@@ -66,13 +67,13 @@ export default function ToolPage() {
         </div>
 
         {/* 개요 */}
-        <Card id="overview" title="개요" icon="📖">
+        <Card id="overview" title="개요" icon="fa-solid fa-book-open">
           <p className="text-[15px] leading-[1.8] text-slate-700">{tool.overview}</p>
         </Card>
 
         {isPrompt ? (
           <>
-            <Card title="좋은 프롬프트의 5대 원칙" icon="🎯">
+            <Card title="좋은 프롬프트의 5대 원칙" icon="fa-solid fa-bullseye">
               <div className="space-y-3">
                 {tool.principles.map((p, i) => (
                   <div key={i} className="rounded-xl bg-slate-50 p-4">
@@ -83,7 +84,7 @@ export default function ToolPage() {
               </div>
             </Card>
 
-            <Card title="실전 프롬프트 패턴" icon="🧩">
+            <Card title="실전 프롬프트 패턴" icon="fa-solid fa-puzzle-piece">
               <div className="space-y-5">
                 {tool.patterns.map((p, i) => (
                   <div key={i}>
@@ -105,13 +106,13 @@ export default function ToolPage() {
               </div>
             </Card>
 
-            <Card title="건설기계 도메인 유의점" icon="⚠️">
+            <Card title="건설기계 도메인 유의점" icon="fa-solid fa-triangle-exclamation">
               <p className="rounded-xl bg-rose-50 p-4 text-[14px] leading-relaxed text-slate-700">
                 {tool.domainNote}
               </p>
             </Card>
 
-            <Card title="도구별 프롬프트 팁" icon="🛠️">
+            <Card title="도구별 프롬프트 팁" icon="fa-solid fa-screwdriver-wrench">
               <ul className="space-y-2">
                 {tool.toolTips.map((t, i) => (
                   <li key={i} className="flex gap-2.5 text-[14px] text-slate-700">
@@ -127,7 +128,7 @@ export default function ToolPage() {
         ) : (
           <>
             <div id="strengths" className="grid scroll-mt-20 gap-6 md:grid-cols-2">
-              <Card title="강점" icon="💪">
+              <Card title="강점" icon="fa-solid fa-award">
                 <ul className="space-y-2">
                   {tool.strengths.map((s, i) => (
                     <li key={i} className="flex gap-2.5 text-[14px] leading-relaxed text-slate-700">
@@ -138,7 +139,7 @@ export default function ToolPage() {
                 </ul>
               </Card>
 
-              <Card title="요금제" icon="💳">
+              <Card title="요금제" icon="fa-solid fa-credit-card">
                 <div className="space-y-2.5">
                   {tool.plans.map((p, i) => (
                     <div key={i} className="flex items-start justify-between gap-3 rounded-lg bg-slate-50 p-3">
@@ -153,7 +154,7 @@ export default function ToolPage() {
               </Card>
             </div>
 
-            <Card id="features" title="핵심 기능" icon="✨">
+            <Card id="features" title="핵심 기능" icon="fa-solid fa-wand-magic-sparkles">
               <div className="grid gap-3 sm:grid-cols-2">
                 {tool.features.map((f, i) => (
                   <div key={i} className="rounded-xl border border-slate-100 bg-slate-50 p-4">
@@ -164,7 +165,7 @@ export default function ToolPage() {
               </div>
             </Card>
 
-            <Card id="usecases" title="건설기계 실무 활용" icon="🏗️">
+            <Card id="usecases" title="건설기계 실무 활용" icon="fa-solid fa-helmet-safety">
               <div className="space-y-3">
                 {tool.useCases.map((u, i) => (
                   <div key={i} className="flex gap-3 rounded-xl bg-brand-50/60 p-4">
@@ -180,7 +181,7 @@ export default function ToolPage() {
 
             {/* 실습 사례 */}
             {tool.practices?.length > 0 && (
-              <Card id="practices" title="세부 실습 사례" icon="🧪">
+              <Card id="practices" title="세부 실습 사례" icon="fa-solid fa-flask">
                 <p className="-mt-2 mb-4 text-[13px] text-slate-500">
                   단계별로 따라 하며 익히는 건설기계 실무 실습입니다. 프롬프트 예시를 복사해 바로 사용해 보세요.
                 </p>
@@ -244,7 +245,7 @@ export default function ToolPage() {
               </Card>
             )}
 
-            <Card id="tips" title="활용 팁" icon="💡">
+            <Card id="tips" title="활용 팁" icon="fa-solid fa-lightbulb">
               <ul className="space-y-2">
                 {tool.promptTips.map((t, i) => (
                   <li key={i} className="flex gap-2.5 text-[14px] leading-relaxed text-slate-700">
@@ -259,7 +260,7 @@ export default function ToolPage() {
 
         {/* 링크 + 교재 연계 */}
         <div id="links" className="grid scroll-mt-20 gap-6 md:grid-cols-2">
-          <Card title="공식 링크" icon="🔗">
+          <Card title="공식 링크" icon="fa-solid fa-link">
             <div className="flex flex-wrap gap-2">
               {tool.links.map((l, i) => (
                 <a
@@ -275,7 +276,7 @@ export default function ToolPage() {
             </div>
           </Card>
 
-          <Card title="교재에서 더 배우기" icon="📚">
+          <Card title="교재에서 더 배우기" icon="fa-solid fa-book">
             <div className="space-y-2">
               {tool.courseRefs.map((c, i) => (
                 <Link
@@ -283,7 +284,7 @@ export default function ToolPage() {
                   to={c.to}
                   className="block rounded-lg bg-slate-50 px-3 py-2.5 text-[13.5px] font-semibold text-brand-800 transition hover:bg-brand-50"
                 >
-                  📖 {c.label} →
+                  <Icon name="fa-solid fa-book-open" /> {c.label} →
                 </Link>
               ))}
             </div>

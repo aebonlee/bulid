@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { promptGuide } from '../data/tools'
+import Icon from '../components/Icon'
 import {
   scoreCriteria,
   gradeTable,
@@ -13,9 +14,9 @@ import {
 } from '../data/promptLab'
 
 const TABS = [
-  { id: 'learn', label: '학습하기', emoji: '📘' },
-  { id: 'pattern', label: '실전 패턴', emoji: '🧩' },
-  { id: 'practice', label: '평가 실습', emoji: '🎯' },
+  { id: 'learn', label: '학습하기', icon: 'fa-solid fa-book' },
+  { id: 'pattern', label: '실전 패턴', icon: 'fa-solid fa-puzzle-piece' },
+  { id: 'practice', label: '평가 실습', icon: 'fa-solid fa-bullseye' },
 ]
 
 export default function PromptLab() {
@@ -39,7 +40,7 @@ export default function PromptLab() {
         {/* Hero */}
         <div className="mb-6 rounded-2xl bg-gradient-to-br from-signal-400 to-signal-500 p-7 text-brand-950 shadow-sm">
           <div className="flex items-center gap-4">
-            <span className="text-5xl">✍️</span>
+            <span className="text-4xl"><Icon name="fa-solid fa-pen-nib" /></span>
             <div>
               <h1 className="text-[28px] font-extrabold leading-none">프롬프트 학습 &amp; 평가</h1>
               <div className="mt-1.5 text-[13px] font-semibold opacity-80">PromptLab</div>
@@ -60,7 +61,7 @@ export default function PromptLab() {
                 tab === t.id ? 'bg-white text-brand-800 shadow' : 'text-slate-500 hover:text-slate-700'
               }`}
             >
-              {t.emoji} {t.label}
+              <Icon name={t.icon} /> {t.label}
             </button>
           ))}
         </div>
@@ -78,7 +79,7 @@ function Card({ title, icon, children, className = '' }) {
     <section className={`mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ${className}`}>
       {title && (
         <h2 className="mb-4 flex items-center gap-2 text-[17px] font-extrabold text-brand-900">
-          <span>{icon}</span>
+          <Icon name={icon} className="text-brand-600" />
           {title}
         </h2>
       )}
@@ -91,7 +92,7 @@ function Card({ title, icon, children, className = '' }) {
 function LearnTab() {
   return (
     <>
-      <Card title="좋은 프롬프트의 5요소" icon="🎯">
+      <Card title="좋은 프롬프트의 5요소" icon="fa-solid fa-bullseye">
         <p className="mb-4 text-[14px] text-slate-600">
           프롬프트 품질을 객관적으로 보는 5대 기준입니다. 각 20점, 합계 100점 — 아래 ‘평가 실습’에서 이 기준으로 채점됩니다.
         </p>
@@ -100,7 +101,7 @@ function LearnTab() {
             <div key={c.key} className="rounded-xl border border-slate-100 bg-slate-50 p-4">
               <div className="mb-1 flex items-center justify-between">
                 <span className="flex items-center gap-2 text-[15px] font-bold text-brand-800">
-                  <span className="text-lg">{c.emoji}</span>
+                  <span className="w-5 text-center text-brand-600"><Icon name={c.icon} /></span>
                   {c.key}
                   <span className="rounded bg-brand-100 px-1.5 text-[11px] font-mono font-bold text-brand-700">
                     {c.code}
@@ -134,11 +135,11 @@ function LearnTab() {
         </div>
       </Card>
 
-      <Card title="점수를 올리는 5가지 기법" icon="🛠️">
+      <Card title="점수를 올리는 5가지 기법" icon="fa-solid fa-screwdriver-wrench">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {techniques.map((t) => (
             <div key={t.title} className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-              <div className="text-2xl">{t.emoji}</div>
+              <div className="text-2xl text-brand-600"><Icon name={t.icon} /></div>
               <div className="mt-1.5 text-[14px] font-bold text-brand-800">{t.title}</div>
               <div className="mt-1 text-[12.5px] leading-relaxed text-slate-600">{t.desc}</div>
             </div>
@@ -146,7 +147,7 @@ function LearnTab() {
         </div>
       </Card>
 
-      <Card title="개선 전 → 후 (채점 예시)" icon="📈">
+      <Card title="개선 전 → 후 (채점 예시)" icon="fa-solid fa-chart-line">
         <div className="grid gap-4 md:grid-cols-2">
           <div>
             <div className="mb-2 flex items-center gap-2">
@@ -180,7 +181,7 @@ function LearnTab() {
 function PatternTab() {
   return (
     <>
-      <Card title="실전 프롬프트 패턴" icon="🧩">
+      <Card title="실전 프롬프트 패턴" icon="fa-solid fa-puzzle-piece">
         <div className="space-y-5">
           {promptGuide.patterns.map((p, i) => (
             <div key={i}>
@@ -200,11 +201,11 @@ function PatternTab() {
         </div>
       </Card>
 
-      <Card title="건설기계 도메인 유의점" icon="⚠️">
+      <Card title="건설기계 도메인 유의점" icon="fa-solid fa-triangle-exclamation">
         <p className="rounded-xl bg-rose-50 p-4 text-[14px] leading-relaxed text-slate-700">{promptGuide.domainNote}</p>
       </Card>
 
-      <Card title="도구별 프롬프트 팁" icon="🧰">
+      <Card title="도구별 프롬프트 팁" icon="fa-solid fa-toolbox">
         <ul className="space-y-2">
           {promptGuide.toolTips.map((t, i) => (
             <li key={i} className="flex gap-2.5 text-[14px] text-slate-700">
@@ -301,7 +302,7 @@ function PracticeTab() {
               disabled={!input.trim()}
               className="rounded-lg bg-brand-800 px-4 py-2 text-[13px] font-bold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              ⚡ 평가받기
+              <Icon name="fa-solid fa-gauge-high" /> 평가받기
             </button>
           </div>
         </div>
@@ -344,7 +345,7 @@ function PracticeTab() {
 
             {result.feedback.length > 0 && (
               <div className="mt-4 rounded-xl bg-amber-50 p-4">
-                <strong className="text-[13px] text-amber-800">💬 개선 피드백</strong>
+                <strong className="text-[13px] text-amber-800"><Icon name="fa-solid fa-comment-dots" /> 개선 피드백</strong>
                 <ul className="mt-1.5 space-y-1">
                   {result.feedback.map((f, i) => (
                     <li key={i} className="flex gap-2 text-[13px] text-slate-700">
@@ -360,7 +361,7 @@ function PracticeTab() {
 
         {showAnswer && (
           <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
-            <p className="mb-2 text-[13px] font-bold text-emerald-700">✅ 모범 프롬프트 예시</p>
+            <p className="mb-2 text-[13px] font-bold text-emerald-700"><Icon name="fa-solid fa-circle-check" /> 모범 프롬프트 예시</p>
             <pre className="whitespace-pre-wrap break-words rounded-xl border border-emerald-200 bg-white p-4 font-mono text-[12.5px] leading-relaxed text-slate-700">
               {scenario.exampleAnswer}
             </pre>

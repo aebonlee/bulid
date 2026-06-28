@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { company } from '../data/about'
+import Icon from '../components/Icon'
 
 export default function CompanyIntro() {
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function CompanyIntro() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {company.platforms.map((p) => (
             <div key={p.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="text-2xl">{p.emoji}</div>
+              <div className="text-xl text-brand-600"><Icon name={p.icon} /></div>
               <div className="mt-1.5 text-[14px] font-bold text-brand-900">{p.title}</div>
               <div className="mt-1 text-[12.5px] leading-relaxed text-slate-600">{p.desc}</div>
             </div>

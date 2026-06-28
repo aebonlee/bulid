@@ -2,6 +2,7 @@ import { Link, useParams, useLocation } from 'react-router-dom'
 import { getVolume, volumes } from '../data/courses'
 import { toolMenu, getTool, TOOL_SECTIONS } from '../data/tools'
 import { ABOUT_PAGES } from '../data/about'
+import Icon from './Icon'
 import { useProgress } from '../context/ProgressContext'
 
 export default function Sidebar({ open, onClose }) {
@@ -69,7 +70,7 @@ function VolumeNav({ onClose }) {
         onClick={onClose}
         className="mb-3 block rounded-lg px-2 py-1.5 text-[12px] font-semibold text-brand-700 hover:bg-brand-50"
       >
-        📋 과정 개요 보기
+        <Icon name="fa-solid fa-clipboard-list" /> 과정 개요 보기
       </Link>
 
       <SectionLabel>DAY 1–6 · 본 과정</SectionLabel>
@@ -108,7 +109,7 @@ function PartLink({ vol, part, active, done, onClose }) {
           done ? 'bg-emerald-500 text-white' : active ? 'bg-brand-800 text-white' : 'bg-slate-200 text-slate-500'
         }`}
       >
-        {done ? '✓' : part.kind === 'day' ? part.day : part.num}
+        {done ? <Icon name="fa-solid fa-check" /> : part.kind === 'day' ? part.day : part.num}
       </span>
       <span className="min-w-0">
         <span className={`block text-[10.5px] font-semibold ${active ? 'text-brand-600' : 'text-slate-400'}`}>{dayLabel}</span>
@@ -135,7 +136,7 @@ function ToolsNav({ onClose }) {
       <>
         {/* 현재 도구 헤더 */}
         <div className="mb-3 flex items-center gap-2.5 rounded-xl bg-brand-50 px-3 py-2.5">
-          <span className="text-xl">{tool.emoji}</span>
+          <span className="text-[17px] text-brand-700"><Icon name={tool.icon} /></span>
           <div className="leading-tight">
             <div className="text-[14px] font-extrabold text-brand-900">{tool.name}</div>
             <div className="text-[10.5px] text-slate-400">{tool.vendor}</div>
@@ -150,7 +151,7 @@ function ToolsNav({ onClose }) {
               onClick={() => goSection(s.id)}
               className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left transition hover:bg-slate-50"
             >
-              <span className="text-[15px]">{s.emoji}</span>
+              <span className="w-5 text-center text-brand-600"><Icon name={s.icon} /></span>
               <span className="text-[13px] font-medium text-slate-600">{s.label}</span>
             </button>
           ))}
@@ -170,7 +171,7 @@ function ToolsNav({ onClose }) {
                   active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
                 }`}
               >
-                <span>{t.emoji}</span>
+                <span className="w-5 text-center text-slate-500"><Icon name={t.icon} /></span>
                 <span className={`text-[12.5px] ${active ? 'font-bold text-brand-900' : 'text-slate-500'}`}>
                   {t.name}
                 </span>
@@ -193,7 +194,7 @@ function ToolsNav({ onClose }) {
           loc.pathname === '/tools' ? 'bg-brand-50 text-brand-800 ring-1 ring-brand-200' : 'text-brand-700 hover:bg-brand-50'
         }`}
       >
-        🧰 전체 보기
+        <Icon name="fa-solid fa-toolbox" /> 전체 보기
       </Link>
 
       <nav className="space-y-0.5">
@@ -209,7 +210,7 @@ function ToolsNav({ onClose }) {
                 active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
               }`}
             >
-              <span className="text-lg">{t.emoji}</span>
+              <span className="w-5 text-center text-brand-600"><Icon name={t.icon} /></span>
               <span className={`text-[13.5px] ${active ? 'font-bold text-brand-900' : 'font-medium text-slate-600'}`}>
                 {t.name}
               </span>
@@ -243,7 +244,7 @@ function AboutNav({ onClose }) {
                 active ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50'
               }`}
             >
-              <span className="text-lg">{s.emoji}</span>
+              <span className="w-5 text-center text-brand-600"><Icon name={s.icon} /></span>
               <span className={`text-[13.5px] ${active ? 'font-bold text-brand-900' : 'font-medium text-slate-600'}`}>
                 {s.label}
               </span>

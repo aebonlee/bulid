@@ -2,9 +2,9 @@
 // 강사·회사 정보는 DreamIT Biz 실제 정보 기준. 필요 시 수정하세요.
 
 export const ABOUT_PAGES = [
-  { id: 'purpose', to: '/about', label: '제작 의도', emoji: '🎯' },
-  { id: 'instructor', to: '/about/instructor', label: '강사 소개', emoji: '👨‍🏫' },
-  { id: 'company', to: '/about/company', label: '회사 소개', emoji: '🏢' },
+  { id: 'purpose', to: '/about', label: '제작 의도', icon: 'fa-solid fa-bullseye' },
+  { id: 'instructor', to: '/about/instructor', label: '강사 소개', icon: 'fa-solid fa-chalkboard-user' },
+  { id: 'company', to: '/about/company', label: '회사 소개', icon: 'fa-solid fa-building' },
 ]
 
 export const purpose = {
@@ -16,10 +16,10 @@ export const purpose = {
     '특히 건설기계 산업의 6대 직무(기술문서·A/S·영업·해외영업·마케팅·DX) 관점에서 “무엇을, 어떤 도구로, 어떻게” 자동화할지에 초점을 맞췄습니다.',
   ],
   points: [
-    { icon: '📚', title: '교재 전문 제공', desc: '제1·2권 6일 과정을 그대로 — 표·그림·실습·사례까지.' },
-    { icon: '✍️', title: '프롬프트 & 도구 가이드', desc: 'ChatGPT·Claude·Gemini·Genspark·Perplexity와 프롬프트 작성법·실습 사례 정리.' },
-    { icon: '🏗️', title: '현장 직무 중심', desc: '건설기계 6직무 실무 자동화에 초점을 맞춘 활용 사례.' },
-    { icon: '📈', title: '학습 진도 관리', desc: '로그인하면 어디서나 진도가 동기화되어 끝까지 완주.' },
+    { icon: 'fa-solid fa-book', title: '교재 전문 제공', desc: '제1·2권 6일 과정을 그대로 — 표·그림·실습·사례까지.' },
+    { icon: 'fa-solid fa-pen-nib', title: '프롬프트 & 도구 가이드', desc: 'ChatGPT·Claude·Gemini·Genspark·Perplexity와 프롬프트 작성법·실습 사례 정리.' },
+    { icon: 'fa-solid fa-helmet-safety', title: '현장 직무 중심', desc: '건설기계 6직무 실무 자동화에 초점을 맞춘 활용 사례.' },
+    { icon: 'fa-solid fa-chart-line', title: '학습 진도 관리', desc: '로그인하면 어디서나 진도가 동기화되어 끝까지 완주.' },
   ],
 }
 
@@ -36,12 +36,12 @@ export const instructor = {
     ['교육 대상', '대학·기업·공공기관'],
   ],
   expertise: [
-    { area: '생성형 AI 교육', detail: 'ChatGPT·Gemini·Claude·Genspark 등 AI 도구 활용 교육', emoji: '🤖' },
-    { area: '프롬프트 엔지니어링', detail: '5요소·SCORE 프레임워크, Few-shot 등 고급 기법', emoji: '✨' },
-    { area: '에듀테크 플랫폼', detail: 'React + Supabase 기반 교육 사이트 설계·개발·운영', emoji: '💻' },
-    { area: 'IT/디지털 전환', detail: '기업 DX 컨설팅, 웹 시스템 구축, 데이터 분석', emoji: '📈' },
-    { area: '대학 교육', detail: 'AI·SW개론, 컴퓨팅 사고 등 대학 교과목 강의', emoji: '🎓' },
-    { area: '출판/콘텐츠', detail: 'AI·IT·경영 분야 전문 도서 기획·출판', emoji: '📘' },
+    { area: '생성형 AI 교육', detail: 'ChatGPT·Gemini·Claude·Genspark 등 AI 도구 활용 교육', icon: 'fa-solid fa-robot' },
+    { area: '프롬프트 엔지니어링', detail: '5요소·SCORE 프레임워크, Few-shot 등 고급 기법', icon: 'fa-solid fa-wand-magic-sparkles' },
+    { area: '에듀테크 플랫폼', detail: 'React + Supabase 기반 교육 사이트 설계·개발·운영', icon: 'fa-solid fa-laptop-code' },
+    { area: 'IT/디지털 전환', detail: '기업 DX 컨설팅, 웹 시스템 구축, 데이터 분석', icon: 'fa-solid fa-chart-line' },
+    { area: '대학 교육', detail: 'AI·SW개론, 컴퓨팅 사고 등 대학 교과목 강의', icon: 'fa-solid fa-graduation-cap' },
+    { area: '출판/콘텐츠', detail: 'AI·IT·경영 분야 전문 도서 기획·출판', icon: 'fa-solid fa-book' },
   ],
   career: [
     { period: '현재', role: '드림아이티비즈(DreamIT Biz) 대표', detail: '에듀테크 전문 기업 경영, 다수 교육 사이트 운영' },
@@ -71,12 +71,12 @@ export const company = {
     ['도메인', 'www.dreamitbiz.com'],
   ],
   platforms: [
-    { emoji: '🤖', title: 'AI / 인공지능', desc: 'ChatGPT·Gemini·Claude·Genspark, 프롬프트 엔지니어링, AI 리터러시 등' },
-    { emoji: '💼', title: '경영 전공', desc: 'HRM·마케팅·회계·기획·디지털비즈니스·UX디자인 등' },
-    { emoji: '💻', title: '코딩 / 프로그래밍', desc: 'HTML·React·C·Java·Python·알고리즘·데이터베이스 등' },
-    { emoji: '🎓', title: '대학 교과목', desc: 'AI·SW개론(한신대), 컴퓨팅 사고(한국기술교육대) 등 정규 교과목' },
-    { emoji: '🏅', title: '자격증 / 취업', desc: '정보처리기사·리눅스·SQLD·AWS·취업 지원 등' },
-    { emoji: '📖', title: '교양 / 인문', desc: '통계·외국어·프레젠테이션·안전·ESG 등 교양 교육' },
+    { icon: 'fa-solid fa-robot', title: 'AI / 인공지능', desc: 'ChatGPT·Gemini·Claude·Genspark, 프롬프트 엔지니어링, AI 리터러시 등' },
+    { icon: 'fa-solid fa-briefcase', title: '경영 전공', desc: 'HRM·마케팅·회계·기획·디지털비즈니스·UX디자인 등' },
+    { icon: 'fa-solid fa-code', title: '코딩 / 프로그래밍', desc: 'HTML·React·C·Java·Python·알고리즘·데이터베이스 등' },
+    { icon: 'fa-solid fa-graduation-cap', title: '대학 교과목', desc: 'AI·SW개론(한신대), 컴퓨팅 사고(한국기술교육대) 등 정규 교과목' },
+    { icon: 'fa-solid fa-award', title: '자격증 / 취업', desc: '정보처리기사·리눅스·SQLD·AWS·취업 지원 등' },
+    { icon: 'fa-solid fa-book-open', title: '교양 / 인문', desc: '통계·외국어·프레젠테이션·안전·ESG 등 교양 교육' },
   ],
   techStack: [
     { name: 'React 18/19', desc: '최신 React로 사이트 구축' },

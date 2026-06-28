@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import BlockRenderer from '../components/BlockRenderer'
+import Icon from '../components/Icon'
 import { getVolume, getPart } from '../data/courses'
 import { useProgress } from '../context/ProgressContext'
 
@@ -43,9 +44,9 @@ export default function PartPage() {
           <div className="mb-7 border-b border-slate-200 pb-6">
             <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-[12px] font-bold text-brand-700">
               {part.kind === 'day' ? (
-                <>📅 DAY {part.day} · PART {String(part.num).padStart(2, '0')}</>
+                <><Icon name="fa-solid fa-calendar-day" /> DAY {part.day} · PART {String(part.num).padStart(2, '0')}</>
               ) : (
-                <>📎 PART {String(part.num).padStart(2, '0')} · 부록</>
+                <><Icon name="fa-solid fa-paperclip" /> PART {String(part.num).padStart(2, '0')} · 부록</>
               )}
             </div>
             <h1 className="text-[26px] font-extrabold leading-tight text-brand-900">{part.title}</h1>
@@ -83,7 +84,7 @@ export default function PartPage() {
                     : 'bg-brand-800 text-white hover:bg-brand-700'
                 }`}
               >
-                {done ? '✓ 학습 완료됨 (취소하기)' : `DAY ${part.day} 학습 완료 표시`}
+                {done ? <><Icon name="fa-solid fa-check" /> 학습 완료됨 (취소하기)</> : `DAY ${part.day} 학습 완료 표시`}
               </button>
             </div>
           )}

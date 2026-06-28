@@ -7,19 +7,19 @@
 
 // 5대 평가 기준 (각 20점)
 export const scoreCriteria = [
-  { key: '역할', code: 'R', max: 20, emoji: '🎭',
+  { key: '역할', code: 'R', max: 20, icon: 'fa-solid fa-user-tie',
     desc: '적절한 전문가 역할을 지정했는가',
     detail: '"너는 15년차 건설기계 A/S 엔지니어야"처럼 역할을 부여하면 답변의 전문성·어조가 안정된다.' },
-  { key: '맥락', code: 'C', max: 20, emoji: '🧱',
+  { key: '맥락', code: 'C', max: 20, icon: 'fa-solid fa-layer-group',
     desc: '장비·대상·상황 배경을 충분히 줬는가',
     detail: '모델명·증상·독자(고객/내부/해외딜러)·수치 등 구체적 배경이 많을수록 환각이 줄고 정확해진다.' },
-  { key: '과제', code: 'T', max: 20, emoji: '📐',
+  { key: '과제', code: 'T', max: 20, icon: 'fa-solid fa-pen-ruler',
     desc: '무엇을 만들지 명확히 지시했는가',
     detail: '"~를 작성해줘"처럼 동작이 분명해야 한다. 작업이 여러 개면 나눠 지시한다.' },
-  { key: '제약', code: 'Co', max: 20, emoji: '📏',
+  { key: '제약', code: 'Co', max: 20, icon: 'fa-solid fa-ruler-combined',
     desc: '길이·톤·금지·안전 등 조건을 명시했는가',
     detail: '분량·말투·금지어·안전문구 유지 등을 정하지 않으면 매번 결과가 달라진다.' },
-  { key: '출력형식', code: 'F', max: 20, emoji: '📋',
+  { key: '출력형식', code: 'F', max: 20, icon: 'fa-solid fa-table-list',
     desc: '결과를 어떤 구조·형태로 받을지 지정했는가',
     detail: '표·목록·섹션 구조를 지정하면 현업에 바로 쓸 수 있는 결과가 나온다.' },
 ]
@@ -36,11 +36,11 @@ export const GRADE_COLOR = { S: '#1D7A4F', A: '#1D4E89', B: '#3D6FE0', C: '#D476
 
 // 점수를 올리는 5가지 기법
 export const techniques = [
-  { emoji: '🎭', title: '역할 부여(Role)', desc: '"너는 ~ 전문가야"로 시작하면 답변의 톤과 전문성이 올라간다.' },
-  { emoji: '🧩', title: '예시 제공(Few-shot)', desc: '원하는 형식의 예시 1~3개를 주면 모델이 그 구조를 모방한다.' },
-  { emoji: '📏', title: '제약 명시', desc: '분량·말투·금지어·안전문구 유지를 못 박아 재작업을 줄인다.' },
-  { emoji: '🔢', title: '단계 분해', desc: '복잡한 작업은 1)…2)…로 쪼개 지시하면 누락이 줄어든다.' },
-  { emoji: '📋', title: '출력형식 지정', desc: '표·목록·섹션 구조를 지정해 바로 쓰는 결과를 받는다.' },
+  { icon: 'fa-solid fa-user-tie', title: '역할 부여(Role)', desc: '"너는 ~ 전문가야"로 시작하면 답변의 톤과 전문성이 올라간다.' },
+  { icon: 'fa-solid fa-clone', title: '예시 제공(Few-shot)', desc: '원하는 형식의 예시 1~3개를 주면 모델이 그 구조를 모방한다.' },
+  { icon: 'fa-solid fa-ruler-combined', title: '제약 명시', desc: '분량·말투·금지어·안전문구 유지를 못 박아 재작업을 줄인다.' },
+  { icon: 'fa-solid fa-list-ol', title: '단계 분해', desc: '복잡한 작업은 1)…2)…로 쪼개 지시하면 누락이 줄어든다.' },
+  { icon: 'fa-solid fa-table-list', title: '출력형식 지정', desc: '표·목록·섹션 구조를 지정해 바로 쓰는 결과를 받는다.' },
 ]
 
 // 채점 예시 (개선 전/후)

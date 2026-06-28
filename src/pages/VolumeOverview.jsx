@@ -2,6 +2,7 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { getVolume, partStats } from '../data/courses'
 import { useProgress } from '../context/ProgressContext'
+import Icon from '../components/Icon'
 
 export default function VolumeOverview() {
   const { volId } = useParams()
@@ -56,7 +57,7 @@ export default function VolumeOverview() {
                   }`}
                 >
                   {d ? (
-                    <span className="text-lg">✓</span>
+                    <span className="text-lg"><Icon name="fa-solid fa-check" /></span>
                   ) : (
                     <>
                       <span className="text-[9px] font-semibold leading-none">DAY</span>

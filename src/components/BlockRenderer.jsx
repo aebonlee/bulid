@@ -1,4 +1,5 @@
 import { IMG_BASE } from '../data/courses'
+import Icon from './Icon'
 
 function Figure({ block }) {
   const { caption, img, source } = block
@@ -116,7 +117,7 @@ function Callout({ tone, label, icon, children }) {
     <div className={`my-4 rounded-xl border px-4 py-3 ${tones[tone]}`}>
       {label && (
         <div className={`mb-1 flex items-center gap-1.5 text-[12.5px] font-bold ${labelTones[tone]}`}>
-          <span>{icon}</span>
+          <Icon name={icon} />
           <span>{label}</span>
         </div>
       )}
@@ -150,7 +151,7 @@ export default function BlockRenderer({ blocks }) {
                 key={i}
                 className="my-4 flex flex-wrap items-center gap-2 rounded-lg bg-slate-100 px-4 py-3"
               >
-                <span className="mr-1 text-[12px] font-bold text-brand-700">🔑 핵심 키워드</span>
+                <span className="mr-1 text-[12px] font-bold text-brand-700"><Icon name="fa-solid fa-key" /> 핵심 키워드</span>
                 {b.text.split(/[,·]/).map((k, ki) =>
                   k.trim() ? (
                     <span
@@ -171,7 +172,7 @@ export default function BlockRenderer({ blocks }) {
                 className="my-5 rounded-xl border border-brand-200 bg-brand-50/60 p-5"
               >
                 <div className="mb-2 flex items-center gap-2 text-[13.5px] font-bold text-brand-800">
-                  🎯 학습 목표
+                  <Icon name="fa-solid fa-bullseye" /> 학습 목표
                 </div>
                 <ul className="space-y-1.5">
                   {b.items.map((it, ii) => (
@@ -215,7 +216,7 @@ export default function BlockRenderer({ blocks }) {
           case 'tip': {
             const { body } = stripBracketPrefix(b.text)
             return (
-              <Callout key={i} tone="tip" label="Tip" icon="💡">
+              <Callout key={i} tone="tip" label="Tip" icon="fa-solid fa-lightbulb">
                 {body}
               </Callout>
             )
@@ -225,7 +226,7 @@ export default function BlockRenderer({ blocks }) {
             const { body } = stripBracketPrefix(b.text)
             const m = b.text.match(/^\[?(실습[^\]]*)\]?\s*(.*)$/s)
             return (
-              <Callout key={i} tone="exercise" label={m ? m[1] : '실습'} icon="✍️">
+              <Callout key={i} tone="exercise" label={m ? m[1] : '실습'} icon="fa-solid fa-pen">
                 {m ? m[2] : body}
               </Callout>
             )
@@ -234,7 +235,7 @@ export default function BlockRenderer({ blocks }) {
           case 'case': {
             const m = b.text.match(/^\[([^\]]+)\]\s*(.*)$/s)
             return (
-              <Callout key={i} tone="case" label={m ? m[1] : '사례'} icon="📌">
+              <Callout key={i} tone="case" label={m ? m[1] : '사례'} icon="fa-solid fa-thumbtack">
                 {m ? m[2] : b.text}
               </Callout>
             )
@@ -242,21 +243,21 @@ export default function BlockRenderer({ blocks }) {
 
           case 'link':
             return (
-              <Callout key={i} tone="link" label="연계 학습" icon="🔗">
+              <Callout key={i} tone="link" label="연계 학습" icon="fa-solid fa-link">
                 {b.text.replace(/^📖\s*/, '')}
               </Callout>
             )
 
           case 'warning':
             return (
-              <Callout key={i} tone="warning" label="유의" icon="⚠️">
+              <Callout key={i} tone="warning" label="유의" icon="fa-solid fa-triangle-exclamation">
                 {b.text.replace(/^⚠️\s*/, '')}
               </Callout>
             )
 
           case 'outcome':
             return (
-              <Callout key={i} tone="outcome" label="핵심 산출물" icon="📦">
+              <Callout key={i} tone="outcome" label="핵심 산출물" icon="fa-solid fa-box">
                 {b.text.replace(/^▶\s*/, '')}
               </Callout>
             )

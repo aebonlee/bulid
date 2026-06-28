@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { promptGuide, tools } from '../data/tools'
+import Icon from '../components/Icon'
 
 // 정적 색상 맵 (Tailwind purge 대응)
 const CARD = {
@@ -17,7 +18,7 @@ export default function ToolsHome() {
     <Layout>
       <div className="mx-auto max-w-5xl px-5 py-9">
         <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-[12.5px] font-bold text-brand-700">
-          🧰 AI 도구 가이드
+          <Icon name="fa-solid fa-toolbox" /> AI 도구 가이드
         </div>
         <h1 className="text-[26px] font-extrabold text-brand-900">프롬프트 & 5대 AI 도구 정리</h1>
         <p className="mt-2 max-w-2xl text-[14.5px] leading-relaxed text-slate-600">
@@ -30,7 +31,7 @@ export default function ToolsHome() {
           to="/tools/prompt"
           className={`mt-7 flex items-center gap-5 rounded-2xl bg-gradient-to-br p-6 shadow-sm transition hover:shadow-md ${CARD[promptGuide.color]}`}
         >
-          <span className="text-4xl">{promptGuide.emoji}</span>
+          <span className="text-3xl"><Icon name={promptGuide.icon} /></span>
           <div className="min-w-0">
             <div className="text-[19px] font-extrabold">{promptGuide.name}</div>
             <div className="mt-0.5 text-[13.5px] opacity-90">{promptGuide.tagline}</div>
@@ -48,7 +49,7 @@ export default function ToolsHome() {
               className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className={`flex items-center gap-3 bg-gradient-to-br p-5 ${CARD[t.color]}`}>
-                <span className="text-3xl">{t.emoji}</span>
+                <span className="text-2xl"><Icon name={t.icon} /></span>
                 <div>
                   <div className="text-[18px] font-extrabold leading-none">{t.name}</div>
                   <div className="mt-1 text-[11.5px] font-medium opacity-80">{t.vendor}</div>

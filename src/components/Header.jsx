@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import LoginModal from './LoginModal'
+import Icon from './Icon'
 
 // 전역 네비게이션 — About 최우선, 4대 AI 도구는 개별 메뉴
 const NAV = [
@@ -51,8 +52,8 @@ export default function Header({ onToggleSidebar }) {
         )}
 
         <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-800 text-lg">
-            🏗️
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-800 text-[15px] text-signal-400">
+            <Icon name="fa-solid fa-helmet-safety" />
           </span>
           <div className="leading-tight">
             <div className="text-[14.5px] font-extrabold tracking-tight text-brand-900">

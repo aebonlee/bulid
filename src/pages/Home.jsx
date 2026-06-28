@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import { volumes, partStats } from '../data/courses'
+import Icon from '../components/Icon'
 import { useProgress } from '../context/ProgressContext'
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
         <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-signal-400/20 blur-3xl" />
         <div className="relative mx-auto max-w-screen-xl px-5 py-16 sm:py-20">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-signal-300 ring-1 ring-white/15">
-            🏗️ 2026년 산업전문인력 AI역량강화 (건설기계)
+            <Icon name="fa-solid fa-helmet-safety" /> 2026년 산업전문인력 AI역량강화 (건설기계)
           </div>
           <h1 className="mt-5 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-[42px]">
             건설기계산업 <span className="text-signal-400">AX 전환</span> 실행역량 강화
@@ -126,7 +127,7 @@ export default function Home() {
               to="/tools"
               className="group flex items-center gap-4 border-b border-slate-200 p-6 transition hover:bg-slate-50 md:border-b-0 md:border-r"
             >
-              <span className="text-4xl">🧰</span>
+              <span className="text-3xl text-brand-700"><Icon name="fa-solid fa-toolbox" /></span>
               <div>
                 <div className="text-[16px] font-extrabold text-brand-900">AI 도구 가이드</div>
                 <div className="mt-0.5 text-[13px] text-slate-500">
@@ -141,7 +142,7 @@ export default function Home() {
               to="/about"
               className="group flex items-center gap-4 p-6 transition hover:bg-slate-50"
             >
-              <span className="text-4xl">ℹ️</span>
+              <span className="text-3xl text-brand-700"><Icon name="fa-solid fa-circle-info" /></span>
               <div>
                 <div className="text-[16px] font-extrabold text-brand-900">소개 (About)</div>
                 <div className="mt-0.5 text-[13px] text-slate-500">

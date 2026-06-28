@@ -1,4 +1,5 @@
 import { useAuth } from '../context/AuthContext'
+import Icon from './Icon'
 
 export default function LoginModal({ open, onClose }) {
   const { signInWith } = useAuth()
@@ -14,8 +15,8 @@ export default function LoginModal({ open, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-1 text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-800 text-2xl">
-            🏗️
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-800 text-xl text-signal-400">
+            <Icon name="fa-solid fa-helmet-safety" />
           </div>
           <h2 className="text-lg font-bold text-brand-900">로그인 / 회원가입</h2>
           <p className="mt-1 text-[13px] text-slate-500">

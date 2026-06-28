@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { instructor } from '../data/about'
+import Icon from '../components/Icon'
 
 export default function InstructorIntro() {
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function InstructorIntro() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {instructor.expertise.map((e) => (
             <div key={e.area} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="text-2xl">{e.emoji}</div>
+              <div className="text-xl text-brand-600"><Icon name={e.icon} /></div>
               <div className="mt-1.5 text-[14px] font-bold text-brand-900">{e.area}</div>
               <div className="mt-1 text-[12.5px] leading-relaxed text-slate-600">{e.detail}</div>
             </div>

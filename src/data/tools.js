@@ -5,19 +5,19 @@
 
 // 도구 상세 페이지의 표준 섹션(좌측 메뉴 앵커와 공유)
 export const TOOL_SECTIONS = [
-  { id: 'overview', label: '개요', emoji: '📖' },
-  { id: 'strengths', label: '강점·요금제', emoji: '💪' },
-  { id: 'features', label: '핵심 기능', emoji: '✨' },
-  { id: 'usecases', label: '실무 활용', emoji: '🏗️' },
-  { id: 'practices', label: '실습 사례', emoji: '🧪' },
-  { id: 'tips', label: '활용 팁', emoji: '💡' },
-  { id: 'links', label: '링크·교재', emoji: '🔗' },
+  { id: 'overview', label: '개요', icon: 'fa-solid fa-book-open' },
+  { id: 'strengths', label: '강점·요금제', icon: 'fa-solid fa-award' },
+  { id: 'features', label: '핵심 기능', icon: 'fa-solid fa-wand-magic-sparkles' },
+  { id: 'usecases', label: '실무 활용', icon: 'fa-solid fa-helmet-safety' },
+  { id: 'practices', label: '실습 사례', icon: 'fa-solid fa-flask' },
+  { id: 'tips', label: '활용 팁', icon: 'fa-solid fa-lightbulb' },
+  { id: 'links', label: '링크·교재', icon: 'fa-solid fa-link' },
 ]
 
 export const promptGuide = {
   id: 'prompt',
   name: '프롬프트 엔지니어링',
-  emoji: '✍️',
+  icon: 'fa-solid fa-pen-nib',
   color: 'signal',
   tagline: 'AI에게 일을 정확히 시키는 법 — 5대 원칙과 도메인 패턴',
   overview:
@@ -82,7 +82,7 @@ export const tools = [
     id: 'chatgpt',
     name: 'ChatGPT',
     vendor: 'OpenAI',
-    emoji: '🟢',
+    icon: 'fa-solid fa-comment-dots',
     color: 'emerald',
     tagline: '가장 범용적인 올라운더 — Custom GPT 생태계와 데이터 분석',
     overview:
@@ -187,7 +187,7 @@ export const tools = [
     id: 'claude',
     name: 'Claude',
     vendor: 'Anthropic',
-    emoji: '🟣',
+    icon: 'fa-solid fa-feather-pointed',
     color: 'violet',
     tagline: '장문·정확성·안전성의 강자 — Artifacts로 즉석 인터랙티브 제작',
     overview:
@@ -290,7 +290,7 @@ export const tools = [
     id: 'gemini',
     name: 'Gemini',
     vendor: 'Google',
-    emoji: '🔷',
+    icon: 'fa-solid fa-gem',
     color: 'sky',
     tagline: 'Google 생태계 통합 + 초대형 컨텍스트 + Deep Research',
     overview:
@@ -393,7 +393,7 @@ export const tools = [
     id: 'genspark',
     name: 'Genspark',
     vendor: 'Genspark AI',
-    emoji: '⚡',
+    icon: 'fa-solid fa-bolt',
     color: 'brand',
     tagline: '위임형 AI Agent — 보고서·슬라이드·시트까지 끝까지 완성',
     overview:
@@ -492,7 +492,7 @@ export const tools = [
     id: 'perplexity',
     name: 'Perplexity',
     vendor: 'Perplexity AI',
-    emoji: '🔎',
+    icon: 'fa-solid fa-magnifying-glass',
     color: 'rose',
     tagline: '출처를 인용하는 AI 검색 — 최신 정보·리서치에 최적',
     overview:
@@ -594,6 +594,6 @@ export function getTool(id) {
 }
 
 export const toolMenu = [
-  { id: 'prompt', name: '프롬프트 학습', emoji: '✍️' },
-  ...tools.map((t) => ({ id: t.id, name: t.name, emoji: t.emoji })),
+  { id: 'prompt', name: '프롬프트 학습', icon: 'fa-solid fa-pen-nib' },
+  ...tools.map((t) => ({ id: t.id, name: t.name, icon: t.icon })),
 ]
