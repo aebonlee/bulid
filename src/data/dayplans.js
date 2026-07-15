@@ -146,7 +146,7 @@ export const dayPlans = {
      "end": "13:50",
      "type": "학습",
      "title": "핵심 기능 활용",
-     "desc": "Code Interpreter — 코딩 없이 데이터 분석 · Vision — 이미지·도면 분석 · DALL-E — 이미지 생성",
+     "desc": "Code Interpreter — 코딩 없이 데이터 분석 · Vision — 이미지·도면 분석 · GPT Image 2 — 이미지 생성",
      "star": false,
      "partRef": "/vol/vol1/part/2"
     },
@@ -156,7 +156,7 @@ export const dayPlans = {
      "end": "14:50",
      "type": "실습",
      "title": "핵심 기능 활용",
-     "desc": "Code Interpreter — 코딩 없이 데이터 분석 · Vision — 이미지·도면 분석 · DALL-E — 이미지 생성",
+     "desc": "Code Interpreter — 코딩 없이 데이터 분석 · Vision — 이미지·도면 분석 · GPT Image 2 — 이미지 생성",
      "star": false,
      "partRef": "/vol/vol1/part/2"
     },
